@@ -49,7 +49,7 @@ class StatTrackerTest < Minitest::Test
     assert_equal 1, @stats.lowest_total_score
   end
 
-  # def test_biggest_blowout
-  #   assert_equal
-  # end
+  def test_biggest_blowout_returns_largest_difference_in_scores
+    assert_equal 5, @stats.biggest_blowout
+  end
 end

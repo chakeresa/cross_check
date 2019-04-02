@@ -14,8 +14,11 @@ module GameStats
     lowest_score_game.total_goals
   end
 
-  # def biggest_blowout
-  #
-  # end
+  def biggest_blowout
+    biggest_difference_game = @games.values.max_by do |game|
+      (game.away_goals - game.home_goals).abs
+    end
+    (biggest_difference_game.away_goals - biggest_difference_game.home_goals).abs
+  end
 
 end
