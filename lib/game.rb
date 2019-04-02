@@ -19,4 +19,8 @@ class Game
     @outcome = game_info[:outcome]
   end
 
+  def total_goals
+    @away_goals + @home_goals
+  end
+
 end
