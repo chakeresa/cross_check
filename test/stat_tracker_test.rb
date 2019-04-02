@@ -56,4 +56,8 @@ class StatTrackerTest < Minitest::Test
   def test_percentage_home_wins_returns_fraction_of_all_games_won_by_home_team
     assert_equal 0.73, @stats.percentage_home_wins
   end
+
+  def test_percentage_visitor_wins_returns_fraction_of_all_games_won_by_away_team
+    assert_equal 0.27, @stats.percentage_visitor_wins
+  end
 end

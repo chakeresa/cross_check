@@ -28,4 +28,8 @@ module GameStats
     (home_game_wins.to_f / @games.count).round(2)
   end
 
+  def percentage_visitor_wins
+    1 - percentage_home_wins
+  end
+
 end
