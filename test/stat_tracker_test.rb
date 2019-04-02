@@ -5,9 +5,9 @@ require './lib/stat_tracker'
 class StatTrackerTest < Minitest::Test
   def setup
     @stats = StatTracker.new
-    @team_stats = @stats.teams("data/team_info.csv")
-    @game_stats = @stats.games("data/game.csv")
-    @game_team_stats = @stats.game_teams("data/game_teams_stats.csv")
+    @team_stats = StatTracker.teams("data/team_info.csv")
+    @game_stats = StatTracker.games("data/game.csv")
+    @game_team_stats = StatTracker.game_teams("data/game_teams_stats.csv")
   end
 
   def test_it_exists
