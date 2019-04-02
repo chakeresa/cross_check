@@ -52,4 +52,8 @@ class StatTrackerTest < Minitest::Test
   def test_biggest_blowout_returns_largest_difference_in_scores
     assert_equal 5, @stats.biggest_blowout
   end
+
+  def test_percentage_home_wins_returns_fraction_of_all_games_won_by_home_team
+    assert_equal 0.73, @stats.percentage_home_wins
+  end
 end
