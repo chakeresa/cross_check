@@ -16,4 +16,13 @@ class StatTracker
       game_hash
     end
   end
+
+  def game_teams(filepath)
+    game_team_data = CSV.table(filepath)
+    game_team_data.inject({}) do |game_team_hash, game_team_row|
+      new_key = game_team_row[:game_id].to_s + "-" + game_team_row[:hoa].to_s
+      game_team_hash[new_key] = game_team_row
+      game_team_hash
+    end
+  end
 end

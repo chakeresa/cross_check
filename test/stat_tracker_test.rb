@@ -7,6 +7,7 @@ class StatTrackerTest < Minitest::Test
     @stats = StatTracker.new
     @team_stats = @stats.teams("data/team_info.csv")
     @game_stats = @stats.games("data/game.csv")
+    @game_team_stats = @stats.game_teams("data/game_teams_stats.csv")
   end
 
   def test_it_exists
@@ -23,5 +24,11 @@ class StatTrackerTest < Minitest::Test
     assert_instance_of Hash, @game_stats
     assert_equal 2012030221, @game_stats.keys[0]
     assert_equal 2012030222, @game_stats.keys[1]
+  end
+
+  def test_game_teams_makes_a_hash_with_game_id_and_HoA_as_keys
+    assert_instance_of Hash, @game_team_stats
+    assert_equal "2012030221-away", @game_team_stats.keys[0]
+    assert_equal "2012030221-home", @game_team_stats.keys[1]
   end
 end
