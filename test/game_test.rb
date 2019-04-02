@@ -1,7 +1,6 @@
 require './test/test_helper'
 
 class GameTest < Minitest::Test
-
   def setup
     @game_stats = StatTracker.games("data/dummy/game_mini.csv")
     @game = Game.new(@game_stats[2012030221])

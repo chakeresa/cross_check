@@ -7,6 +7,7 @@ class Game
               :away_goals,
               :home_goals,
               :outcome
+
   def initialize(game_info)
     @game_id = game_info[:game_id]
     @season = game_info[:season]
@@ -17,6 +18,5 @@ class Game
     @home_goals = game_info[:home_goals]
     @outcome = game_info[:outcome]
   end
-
 
 end

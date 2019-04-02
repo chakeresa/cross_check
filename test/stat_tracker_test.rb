@@ -2,10 +2,15 @@ require './test/test_helper'
 
 class StatTrackerTest < Minitest::Test
   def setup
-    @stats = StatTracker.new
     @team_stats = StatTracker.teams("data/team_info.csv")
     @game_stats = StatTracker.games("data/dummy/game_mini.csv")
     @game_team_stats = StatTracker.game_teams("data/dummy/game_teams_stats_mini.csv")
+    @locations = {
+      games: "data/dummy/game_mini.csv",
+      teams: "data/team_info.csv",
+      game_teams: "data/dummy/game_teams_stats_mini.csv"
+    }
+    @stats = StatTracker.from_csv(@locations)
   end
 
   def test_it_exists
@@ -31,16 +36,12 @@ class StatTrackerTest < Minitest::Test
   end
 
   def test_from_csv_returns_a_hash_of_hashes
-    locations = {
-      games: "data/dummy/game_mini.csv",
-      teams: "data/team_info.csv",
-      game_teams: "data/dummy/game_teams_stats_mini.csv"
-    }
+    assert_equal 15, @stats.games.length
+    assert_equal 33, @stats.teams.length
+    assert_equal 14, @stats.game_teams.length
+  end
 
-    actual = StatTracker.from_csv(locations)
-
-    assert_equal 15, actual[:games].length
-    assert_equal 33, actual[:teams].length
-    assert_equal 14, actual[:game_teams].length
+  def test_highest_total_score
+    assert_equal 8, @stats.highest_total_score
   end
 end
