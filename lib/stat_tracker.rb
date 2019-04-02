@@ -25,7 +25,7 @@ class StatTracker
   def self.games(filepath)
     game_data = CSV.table(filepath)
     game_data.inject({}) do |game_hash, game|
-      game_hash[game[:game_id]] = game
+      game_hash[game[:game_id]] = Game.new(game)
       game_hash
     end
   end
@@ -46,4 +46,5 @@ class StatTracker
     all_files[:game_teams] = self.game_teams(locations[:game_teams])
     StatTracker.new(all_files)
   end
+
 end
