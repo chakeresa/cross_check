@@ -1,0 +1,15 @@
+"game_id","team_id","HoA","won","settled_in","head_coach","goals","shots","hits","pim","powerPlayOpportunities","powerPlayGoals","faceOffWinPercentage","giveaways","takeaways"
+"2012030221","3","away",FALSE,"OT","John Tortorella",2,35,44,8,3,0,44.8,17,7
+"2012030221","6","home",TRUE,"OT","Claude Julien",3,48,51,6,4,1,55.2,4,5
+"2012030222","3","away",FALSE,"REG","John Tortorella",2,37,33,11,5,0,51.7,1,4
+"2012030222","6","home",TRUE,"REG","Claude Julien",5,32,36,19,1,0,48.3,16,6
+"2015030183","26","away",TRUE,"OT","Darryl Sutter",2,24,61,12,3,1,56.5,8,5
+"2015030183","28","home",FALSE,"OT","Peter DeBoer",1,30,39,8,5,0,43.5,17,11
+"2015030184","26","away",FALSE,"REG","Darryl Sutter",2,28,46,8,2,0,49.1,13,6
+"2015030184","28","home",TRUE,"REG","Peter DeBoer",3,29,35,4,4,3,50.9,17,7
+"2014030156","19","away",FALSE,"REG","Ken Hitchcock",1,31,12,4,2,0,47.2,5,2
+"2014030156","30","home",TRUE,"REG","Mike Yeo",4,21,15,6,1,0,52.8,5,10
+"2014030111","9","away",FALSE,"REG","Dave Cameron",3,33,44,30,5,2,49.4,10,4
+"2014030111","8","home",TRUE,"REG","Michel Therrien",4,39,42,33,1,0,50.6,15,10
+"2014030222","15","away",FALSE,"REG","Barry Trotz",2,32,38,8,1,0,53.4,12,5
+"2014030222","3","home",TRUE,"REG","Alain Vigneault",3,35,30,2,4,1,46.6,13,7
