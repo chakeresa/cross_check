@@ -1,5 +1,6 @@
 require 'csv'
-require './lib/game_stats'
+require_relative './game_stats'
+require_relative './game'
 
 class StatTracker
   include GameStats
