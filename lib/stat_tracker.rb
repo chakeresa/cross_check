@@ -27,6 +27,10 @@ class StatTracker
   end
 
   def self.from_csv(locations)
-
+    all_files = {}
+    all_files[:games] = self.games(locations[:games])
+    all_files[:teams] = self.teams(locations[:teams])
+    all_files[:game_teams] = self.game_teams(locations[:game_teams])
+    all_files
   end
 end
