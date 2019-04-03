@@ -29,7 +29,7 @@ module GameStats
   end
 
   def percentage_visitor_wins
-    1 - percentage_home_wins
+    (1 - percentage_home_wins).round(2)
   end
 
   def count_of_games_by_season
@@ -46,4 +46,33 @@ module GameStats
     end
     (total_goals.to_f / @games.count).round(2)
   end
+
+  def average_goals_by_season
+    hash = Hash.new(0)
+    hash_2 = Hash.new(0)
+    x = -1
+    @games.each do |game_id, game|
+      hash[game.season] += game.total_goals
+    end
+    hash.each do |key, value|
+      x += 1
+      hash_2[key] = (value / count_of_games_by_season.values[x].to_f).round(2)
+    end
+    hash_2
+  end
+
+  def average_goals_by_season
+    hash = Hash.new(0)
+    hash_2 = Hash.new(0)
+    x = -1
+    @games.each do |game_id, game|
+      hash[game.season] += game.total_goals
+    end
+    hash.each do |key, value|
+      x += 1
+      hash_2[key] = (value / count_of_games_by_season.values[x].to_f).round(2)
+    end
+    hash_2
+  end
+
 end
