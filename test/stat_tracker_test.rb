@@ -41,6 +41,7 @@ class StatTrackerTest < Minitest::Test
     assert_equal 14, @stats.game_teams.length
   end
 
+  # GameStats module tests
   def test_highest_total_score
     assert_equal 8, @stats.highest_total_score
   end
@@ -95,4 +96,8 @@ class StatTrackerTest < Minitest::Test
     assert_equal expected, @stats.average_goals_by_season
   end
 
+  # TeamStats module tests
+  def test_count_of_teams_returns_total_number_of_unique_team_names_in_data
+    assert_equal 32, @stats.count_of_teams
+  end
 end
