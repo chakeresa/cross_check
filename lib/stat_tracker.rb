@@ -1,9 +1,12 @@
 require 'csv'
 require_relative './game_stats'
+require_relative './league_stats'
 require_relative './game'
+require_relative './team'
 
 class StatTracker
   include GameStats
+  include LeagueStats
 
   attr_reader :games,
               :teams,
@@ -18,7 +21,7 @@ class StatTracker
   def self.teams(filepath)
     team_data = CSV.table(filepath)
     team_data.inject({}) do |team_hash, team|
-      team_hash[team[:team_id]] = team
+      team_hash[team[:team_id]] = Team.new(team)
       team_hash
     end
   end
