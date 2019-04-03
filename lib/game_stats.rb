@@ -47,32 +47,21 @@ module GameStats
     (total_goals.to_f / @games.count).round(2)
   end
 
-  def average_goals_by_season
+  def count_of_goals_by_season
     hash = Hash.new(0)
-    hash_2 = Hash.new(0)
-    x = -1
     @games.each do |game_id, game|
       hash[game.season] += game.total_goals
     end
-    hash.each do |key, value|
-      x += 1
-      hash_2[key] = (value / count_of_games_by_season.values[x].to_f).round(2)
-    end
-    hash_2
+    hash
   end
 
   def average_goals_by_season
     hash = Hash.new(0)
-    hash_2 = Hash.new(0)
-    x = -1
-    @games.each do |game_id, game|
-      hash[game.season] += game.total_goals
+    count_of_goals_by_season.each do |season, goal_count|
+      value = goal_count.to_f / count_of_games_by_season[season]
+      hash[season] = value.round(2)
     end
-    hash.each do |key, value|
-      x += 1
-      hash_2[key] = (value / count_of_games_by_season.values[x].to_f).round(2)
-    end
-    hash_2
+    hash
   end
 
 end
