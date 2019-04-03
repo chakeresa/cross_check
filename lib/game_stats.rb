@@ -29,7 +29,7 @@ module GameStats
   end
 
   def percentage_visitor_wins
-    1 - percentage_home_wins
+    (1 - percentage_home_wins).round(2)
   end
 
   def count_of_games_by_season
