@@ -18,7 +18,7 @@ class StatTracker
   def self.teams(filepath)
     team_data = CSV.table(filepath)
     team_data.inject({}) do |team_hash, team|
-      team_hash[team[:team_id]] = team
+      team_hash[team[:team_id]] = Team.new(team)
       team_hash
     end
   end
