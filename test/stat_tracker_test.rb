@@ -1,13 +1,16 @@
-require 'minitest/autorun'
-require 'minitest/pride'
-require './lib/stat_tracker'
+require './test/test_helper'
 
 class StatTrackerTest < Minitest::Test
   def setup
-    @stats = StatTracker.new
     @team_stats = StatTracker.teams("data/team_info.csv")
     @game_stats = StatTracker.games("data/dummy/game_mini.csv")
     @game_team_stats = StatTracker.game_teams("data/dummy/game_teams_stats_mini.csv")
+    @locations = {
+      games: "data/dummy/game_mini.csv",
+      teams: "data/team_info.csv",
+      game_teams: "data/dummy/game_teams_stats_mini.csv"
+    }
+    @stats = StatTracker.from_csv(@locations)
   end
 
   def test_it_exists
@@ -33,16 +36,63 @@ class StatTrackerTest < Minitest::Test
   end
 
   def test_from_csv_returns_a_hash_of_hashes
-    locations = {
-      games: "data/dummy/game_mini.csv",
-      teams: "data/team_info.csv",
-      game_teams: "data/dummy/game_teams_stats_mini.csv"
-    }
-
-    actual = StatTracker.from_csv(locations)
-
-    assert_equal 15, actual[:games].length
-    assert_equal 33, actual[:teams].length
-    assert_equal 14, actual[:game_teams].length
+    assert_equal 15, @stats.games.length
+    assert_equal 33, @stats.teams.length
+    assert_equal 14, @stats.game_teams.length
   end
+
+  def test_highest_total_score
+    assert_equal 8, @stats.highest_total_score
+  end
+
+  def test_lowest_total_score
+    assert_equal 1, @stats.lowest_total_score
+  end
+
+  def test_biggest_blowout_returns_largest_difference_in_scores
+    assert_equal 5, @stats.biggest_blowout
+  end
+
+  def test_percentage_home_wins_returns_fraction_of_all_games_won_by_home_team
+    assert_equal 0.73, @stats.percentage_home_wins
+  end
+
+  def test_percentage_visitor_wins_returns_fraction_of_all_games_won_by_away_team
+    assert_equal 0.27, @stats.percentage_visitor_wins
+  end
+
+  def test_count_of_games_by_season_returns_hash_of_seasons_and_corresponding_games
+    expected = {
+      "20122013" => 7,
+      "20132014" => 5,
+      "20172018" => 1,
+      "20152016" => 2
+    }
+    assert_equal expected, @stats.count_of_games_by_season
+  end
+
+  def test_average_goals_per_game
+    assert_equal 4.60, @stats.average_goals_per_game
+  end
+
+  def test_count_of_goals_by_season_returns_hash_of_seasons_and_corresponding_goals
+    expected = {
+      "20122013" => 36,
+      "20132014" => 22,
+      "20172018" => 3,
+      "20152016" => 8
+    }
+    assert_equal expected, @stats.count_of_goals_by_season
+  end
+
+  def test_average_goals_by_season
+    expected = {
+      "20122013" => 5.14,
+      "20132014" => 4.40,
+      "20172018" => 3.00,
+      "20152016" => 4.00
+    }
+    assert_equal expected, @stats.average_goals_by_season
+  end
+
 end
