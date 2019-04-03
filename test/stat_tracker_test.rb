@@ -60,4 +60,14 @@ class StatTrackerTest < Minitest::Test
   def test_percentage_visitor_wins_returns_fraction_of_all_games_won_by_away_team
     assert_equal 0.27, @stats.percentage_visitor_wins
   end
+
+  def test_count_of_games_by_season_returns_hash_of_seasons_and_corresponding_games
+    expected = {
+      "20122013" => 7,
+      "20132014" => 5,
+      "20172018" => 1,
+      "20152016" => 2
+    }
+    assert_equal expected, @stats.count_of_games_by_season
+  end
 end

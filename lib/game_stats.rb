@@ -32,4 +32,12 @@ module GameStats
     1 - percentage_home_wins
   end
 
+  def count_of_games_by_season
+    hash = Hash.new(0)
+    @games.each do |game_id, game|
+      hash[game.season] += 1
+    end
+    hash
+  end
+
 end

@@ -10,7 +10,7 @@ class Game
 
   def initialize(game_info)
     @game_id = game_info[:game_id]
-    @season = game_info[:season]
+    @season = game_info[:season].to_s
     @type = game_info[:type]
     @away_team_id = game_info[:away_team_id]
     @home_team_id = game_info[:home_team_id]
