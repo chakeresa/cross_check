@@ -21,4 +21,18 @@ module LeagueStats
     best_offense_team.team_name
   end
 
+  def worst_offense
+    worst_offense_team = @teams.values.min_by do |team|
+      total_team_goals = team.games.values.sum do |game|
+        game[:goals]
+      end
+      total_team_games = team.games.values.count
+      if total_team_games == 0
+        500
+      else
+        total_team_goals.to_f / total_team_games
+      end
+    end
+    worst_offense_team.team_name
+  end
 end
