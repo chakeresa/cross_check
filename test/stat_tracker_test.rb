@@ -102,7 +102,6 @@ class StatTrackerTest < Minitest::Test
   end
 
   def test_best_offense_returns_team_name_with_highest_average_goals
-    skip
     assert_equal "Blackhawks", @stats.best_offense
   end
 
