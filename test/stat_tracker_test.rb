@@ -2,7 +2,7 @@ require './test/test_helper'
 
 class StatTrackerTest < Minitest::Test
   def setup
-    @team_stats = StatTracker.teams("data/team_info.csv")
+    @team_stats = StatTracker.teams("data/team_info.csv", "data/dummy/game_teams_stats_mini.csv")
     @game_stats = StatTracker.games("data/dummy/game_mini.csv")
     @game_team_stats = StatTracker.game_teams("data/dummy/game_teams_stats_mini.csv")
     @locations = {
@@ -38,7 +38,7 @@ class StatTrackerTest < Minitest::Test
   def test_from_csv_returns_a_hash_of_hashes
     assert_equal 15, @stats.games.length
     assert_equal 33, @stats.teams.length
-    assert_equal 14, @stats.game_teams.length
+    assert_equal 30, @stats.game_teams.length
   end
 
   # GameStats module tests
@@ -100,4 +100,9 @@ class StatTrackerTest < Minitest::Test
   def test_count_of_teams_returns_total_number_of_unique_team_names_in_data
     assert_equal 32, @stats.count_of_teams
   end
+
+  def test_best_offense_returns_team_name_with_highest_average_goals
+    assert_equal "Blackhawks", @stats.best_offense
+  end
+
 end

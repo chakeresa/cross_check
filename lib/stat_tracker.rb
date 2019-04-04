@@ -18,11 +18,19 @@ class StatTracker
     @game_teams = all_files[:game_teams]
   end
 
-  def self.teams(filepath)
-    team_data = CSV.table(filepath)
+  def self.teams(teams_filepath, team_games_filepath)
+    team_data = CSV.table(teams_filepath)
     team_data.inject({}) do |team_hash, team|
-      team_hash[team[:team_id]] = Team.new(team)
+      relevant_game_team_stats = self.game_stats_for_team(team, team_games_filepath)
+      team_hash[team[:team_id]] = Team.new(team, relevant_game_team_stats)
       team_hash
+    end
+  end
+
+  def self.game_stats_for_team(team, filepath)
+    single_team_id = team[:team_id]
+    self.game_teams(filepath).keep_if do |uniq_game_id, row|
+      row[:team_id] == single_team_id
     end
   end
 
@@ -46,7 +54,7 @@ class StatTracker
   def self.from_csv(locations)
     all_files = {}
     all_files[:games] = self.games(locations[:games])
-    all_files[:teams] = self.teams(locations[:teams])
+    all_files[:teams] = self.teams(locations[:teams], locations[:game_teams])
     all_files[:game_teams] = self.game_teams(locations[:game_teams])
     StatTracker.new(all_files)
   end
