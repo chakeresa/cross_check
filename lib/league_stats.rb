@@ -5,4 +5,9 @@ module LeagueStats
     end
     all_team_names.uniq.count
   end
+
+  # def best_offense
+  #
+  # end
+
 end
