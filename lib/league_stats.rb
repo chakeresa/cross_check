@@ -1,10 +1,11 @@
 module LeagueStats
   def count_of_teams
     # TO DO: change counting method so that spec harness is happy -- count all entries?
-    all_team_names = @teams.values.map do |team|
-      team.team_name
-    end
-    all_team_names.uniq.count
+    @teams.count
+    # all_team_names = @teams.values.map do |team|
+    #   team.team_name
+    # end
+    # all_team_names.uniq.count
   end
 
   def best_offense
