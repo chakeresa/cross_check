@@ -1,11 +1,6 @@
 module LeagueStats
   def count_of_teams
-    # TO DO: change counting method so that spec harness is happy -- count all entries?
     @teams.count
-    # all_team_names = @teams.values.map do |team|
-    #   team.team_name
-    # end
-    # all_team_names.uniq.count
   end
 
   def best_offense
@@ -15,7 +10,7 @@ module LeagueStats
       end
       total_team_games = team.games.values.count
       if total_team_games == 0
-        -5
+        -5 # TO DO: consider using medium data set for tests, then we can delete this
       else
         total_team_goals.to_f / total_team_games
       end
