@@ -1,5 +1,6 @@
 module LeagueStats
   def count_of_teams
+    # TO DO: change counting method so that spec harness is happy -- count all entries?
     all_team_names = @teams.values.map do |team|
       team.team_name
     end
@@ -30,18 +31,18 @@ module LeagueStats
 
   def best_fans
     best_fans_team = @teams.values.max_by do |team|
-      total_home_count = home_win_count + home_loss_count
-      total_away_count = away_win_count + away_loss_count
-      team.home_win_count.to_f / total_home_count - team.away_win_count.to_f / team.total_away_count
+      total_home_count = team.home_win_count + team.home_loss_count
+      total_away_count = team.away_win_count + team.away_loss_count
+      team.home_win_count.to_f / total_home_count - team.away_win_count.to_f / total_away_count
     end
     best_fans_team.team_name
   end
 
   def worst_fans
     worst_fans_teams = @teams.values.find_all do |team|
-      total_home_count = home_win_count + home_loss_count
-      total_away_count = away_win_count + away_loss_count
-      diff = team.home_win_count.to_f / total_home_count - team.away_win_count.to_f / team.total_away_count
+      total_home_count = team.home_win_count + team.home_loss_count
+      total_away_count = team.away_win_count + team.away_loss_count
+      diff = team.home_win_count.to_f / total_home_count - team.away_win_count.to_f / total_away_count
       diff < 0
     end
     worst_fans_teams.map do |team|
