@@ -22,14 +22,31 @@ module LeagueStats
   end
 
   def winningest_team
-    # Name of the team with the highest win percentage across all seasons.	String
+    winning_team = @teams.values.max_by do |team|
+      (team.home_win_count + team.away_win_count).to_f / team.games.count
+    end
+    winning_team.team_name
   end
 
   def best_fans
-    # Name of the team with biggest difference between home and away win percentages.	String
+    best_fans_team = @teams.values.max_by do |team|
+      total_home_count = home_win_count + home_loss_count
+      total_away_count = away_win_count + away_loss_count
+      team.home_win_count.to_f / total_home_count - team.away_win_count.to_f / team.total_away_count
+    end
+    best_fans_team.team_name
   end
 
   def worst_fans
-    # List of names of all teams with better away records than home records.	Array
+    worst_fans_teams = @teams.values.find_all do |team|
+      total_home_count = home_win_count + home_loss_count
+      total_away_count = away_win_count + away_loss_count
+      diff = team.home_win_count.to_f / total_home_count - team.away_win_count.to_f / team.total_away_count
+      diff < 0
+    end
+    worst_fans_teams.map do |team|
+      team.team_name
+    end
+    # TO DO: consider combining these 2 enums by using inject
   end
 end
