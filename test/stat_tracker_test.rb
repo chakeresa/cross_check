@@ -109,4 +109,11 @@ class StatTrackerTest < Minitest::Test
     assert_equal "Blues", @stats.worst_offense
   end
 
+  def test_best_defense_returns_team_name_with_lowest_average_opponent_goals
+    assert_equal "Canucks", @stats.best_defense
+  end
+
+  def test_worst_defense_returns_team_name_with_highest_average_opponent_goals
+    assert_equal "Hurricanes", @stats.worst_defense
+  end
 end
