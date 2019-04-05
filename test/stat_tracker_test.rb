@@ -11,6 +11,12 @@ class StatTrackerTest < Minitest::Test
       game_teams: "data/dummy/game_teams_stats_mini.csv"
     }
     @stats = StatTracker.from_csv(@locations)
+    @med_locations = {
+      games: "data/dummy/game_mini.csv", # TO DO: haven't made med - use mini
+      teams: "data/dummy/team_info_med.csv",
+      game_teams: "data/dummy/game_teams_stats_med.csv"
+    }
+    @med_stats = StatTracker.from_csv(@med_locations)
   end
 
   def test_it_exists
@@ -116,4 +122,17 @@ class StatTrackerTest < Minitest::Test
   def test_worst_defense_returns_team_name_with_highest_average_opponent_goals
     assert_equal "Hurricanes", @stats.worst_defense
   end
+
+  def test_winningest_team_returns_name_of_team_with_highest_win_percent_of_all_time
+    assert_equal "Lightning", @med_stats.winningest_team
+  end
+
+  def test_best_fans_returns_name_of_team_with_largest_diff_bw_home_and_away_win_percent
+    assert_equal "Lightning", @med_stats.best_fans
+  end
+
+  def test_worst_fans_returns_ary_of_all_teams_w_better_away_than_home_win_percent
+    assert_equal ["Flyers"], @med_stats.worst_fans
+  end
+
 end

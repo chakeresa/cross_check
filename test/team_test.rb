@@ -24,4 +24,21 @@ class TeamTest < Minitest::Test
     assert_equal 27, @team.games["2012030312-home"][:shots]
   end
 
+  def test_home_win_count
+    team2 = @team_stats[6]
+    assert_equal 5, team2.home_win_count
+  end
+
+  def test_home_loss_count
+    assert_equal 2, @team.home_loss_count
+  end
+
+  def test_away_win_count
+    assert_equal 1, @team.away_win_count
+  end
+
+  def test_away_loss_count
+    assert_equal 2, @team.away_loss_count
+  end
+
 end

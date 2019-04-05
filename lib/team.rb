@@ -17,4 +17,28 @@ class Team
     @games = game_info
   end
 
+  def home_win_count
+    @games.values.count do |game|
+      game[:hoa] == "home" && game[:won] == "TRUE"
+    end
+  end
+
+  def home_loss_count
+    @games.values.count do |game|
+      game[:hoa] == "home" && game[:won] == "FALSE"
+    end
+  end
+
+  def away_win_count
+    @games.values.count do |game|
+      game[:hoa] == "away" && game[:won] == "TRUE"
+    end
+  end
+
+  def away_loss_count
+    @games.values.count do |game|
+      game[:hoa] == "away" && game[:won] == "FALSE"
+    end
+  end
+
 end
