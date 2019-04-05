@@ -36,10 +36,10 @@ module LeagueStats
   def best_defense
     best_defense_team = @teams.values.min_by do |team|
       total_opponent_goals = @games.values.sum do |game|
-        if game.away_team_id == team.team_id
-          game.home_goals
-        elsif game.home_team_id == team.team_id
-          game.away_goals
+        if game.team_ids[:away] == team.team_id
+          game.goals[:home]
+        elsif game.team_ids[:home] == team.team_id
+          game.goals[:away]
         else
           0
         end
@@ -57,10 +57,10 @@ module LeagueStats
   def worst_defense
     worst_defense_team = @teams.values.max_by do |team|
       total_opponent_goals = @games.values.sum do |game|
-        if game.away_team_id == team.team_id
-          game.home_goals
-        elsif game.home_team_id == team.team_id
-          game.away_goals
+        if game.team_ids[:away] == team.team_id
+          game.goals[:home]
+        elsif game.team_ids[:home] == team.team_id
+          game.goals[:away]
         else
           0
         end
