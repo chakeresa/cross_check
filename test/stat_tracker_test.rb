@@ -111,6 +111,18 @@ class StatTrackerTest < Minitest::Test
     assert_equal "Blackhawks", @stats.best_offense
   end
 
+  def test_worst_offense_returns_team_name_with_lowest_average_goals
+    assert_equal "Blues", @stats.worst_offense
+  end
+
+  def test_best_defense_returns_team_name_with_lowest_average_opponent_goals
+    assert_equal "Canucks", @stats.best_defense
+  end
+
+  def test_worst_defense_returns_team_name_with_highest_average_opponent_goals
+    assert_equal "Hurricanes", @stats.worst_defense
+  end
+
   def test_winningest_team_returns_name_of_team_with_highest_win_percent_of_all_time
     assert_equal "Lightning", @med_stats.winningest_team
   end
