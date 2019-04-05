@@ -21,4 +21,15 @@ module LeagueStats
     best_offense_team.team_name
   end
 
+  def winningest_team
+    # Name of the team with the highest win percentage across all seasons.	String
+  end
+
+  def best_fans
+    # Name of the team with biggest difference between home and away win percentages.	String
+  end
+
+  def worst_fans
+    # List of names of all teams with better away records than home records.	Array
+  end
 end
