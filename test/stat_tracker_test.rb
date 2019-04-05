@@ -104,7 +104,7 @@ class StatTrackerTest < Minitest::Test
 
   # TeamStats module tests
   def test_count_of_teams_returns_total_number_of_unique_team_names_in_data
-    assert_equal 32, @stats.count_of_teams
+    assert_equal 33, @stats.count_of_teams
   end
 
   def test_best_offense_returns_team_name_with_highest_average_goals
