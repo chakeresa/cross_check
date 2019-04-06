@@ -28,8 +28,7 @@ class StatTracker
   def self.game_stats_for_game(game, filepath)
     single_game_id = game[:game_id]
     hash = Hash.new
-    require "pry"; binding.pry
-    hash[:home] = self.create_game_teams(filepath).find do |_, row|
+    hash[:home] = self.create_game_teams(filepath).find do |key_not_used, row|
       row[:game_id] == single_game_id && row[:hoa] == "home"
     end[1]
     hash[:away] = self.create_game_teams(filepath).find do |uniq_game_id, row|
@@ -49,7 +48,7 @@ class StatTracker
 
   def self.create_games(games_filepath, team_games_filepath)
     game_data = CSV.table(games_filepath)
-    game_data.inject({}) do |game_hash, game|
+    thing = game_data.inject({}) do |game_hash, game|
       relevant_game_team_stats = self.game_stats_for_game(game, team_games_filepath)
       game_hash[game[:game_id]] = Game.new(game, relevant_game_team_stats)
       game_hash

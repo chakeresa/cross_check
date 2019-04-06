@@ -13,7 +13,7 @@ class StatTrackerTest < Minitest::Test
     @game_stats = StatTracker.create_games(@locations[:games], @locations[:game_teams])
     @game_team_stats = StatTracker.create_game_teams(@locations[:game_teams])
     @med_locations = {
-      games: "data/dummy/game_mini.csv", # TO DO: haven't made med - use mini
+      games: "data/dummy/game_med.csv",
       teams: "data/dummy/team_info_med.csv",
       game_teams: "data/dummy/game_teams_stats_med.csv"
     }
