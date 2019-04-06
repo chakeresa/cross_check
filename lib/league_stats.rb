@@ -76,25 +76,19 @@ module LeagueStats
   end
 
   def highest_scoring_visitor
-    # Match all the goals with corresponding team_id
-      # Team id points to array of away goals
-      total_games = Hash.new(0)
-      scores = Hash.new(0)
-      @games.values.each do |game|
-        scores[game.team_ids[:away]] += game.goals[:away]
-        total_games[game.team_ids[:away]] += 1
-      end
-    # sum away goals per each team / total number of away games per team
+    total_games = Hash.new(0)
+    scores = Hash.new(0)
+    @games.values.each do |game|
+      scores[game.team_ids[:away]] += game.goals[:away]
+      total_games[game.team_ids[:away]] += 1
+    end
 
-    # For every score, divide by total games played hash
     averages = Hash.new(0)
     scores.map do |team_id, score|
       averages[team_id] = score.to_f / total_games[team_id]
     end
-    # Find team id with highest average
-    highest_average = averages.max_by {|team_id, average_goals| average_goals}
 
-    # Match name of team with team id
+    highest_average = averages.max_by {|team_id, average_goals| average_goals}
     @teams[highest_average[0]].team_name
   end
 
