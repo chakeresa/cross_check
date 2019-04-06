@@ -105,6 +105,21 @@ module LeagueStats
     @teams[highest_average[0]].team_name
   end
 
+  def lowest_scoring_visitor
+    total_games = Hash.new(0)
+    scores = Hash.new(0)
+    @games.values.each do |game|
+      scores[game.team_ids[:away]] += game.goals[:away]
+      total_games[game.team_ids[:away]] += 1
+    end
+    averages = Hash.new(0)
+    scores.map do |team_id, score|
+      averages[team_id] = score.to_f / total_games[team_id]
+    end
+    lowest_average = averages.min_by {|team_id, average_goals| average_goals}
+    @teams[lowest_average[0]].team_name
+  end
+
   def winningest_team
     winning_team = @teams.values.max_by do |team|
       (team.home_win_count + team.away_win_count).to_f / team.games.count
