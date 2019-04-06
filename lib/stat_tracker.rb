@@ -18,7 +18,22 @@ class StatTracker
     @game_teams = all_files[:game_teams]
   end
 
-  def self.teams(teams_filepath, team_games_filepath)
+  def self.game_stats_for_team(team, filepath)
+    single_team_id = team[:team_id]
+    self.create_game_teams(filepath).keep_if do |uniq_game_id, row|
+      row[:team_id] == single_team_id
+    end
+  end
+
+  def self.game_stats_for_game(game, filepath)
+    single_game_id = game[:game_id]
+    hash = Hash.new
+    hash[:home] = self.create_game_teams(filepath)[single_game_id.to_s + "-" + "home"]
+    hash[:away] = self.create_game_teams(filepath)[single_game_id.to_s + "-" + "away"]
+    hash
+  end
+
+  def self.create_teams(teams_filepath, team_games_filepath)
     team_data = CSV.table(teams_filepath)
     team_data.inject({}) do |team_hash, team|
       relevant_game_team_stats = self.game_stats_for_team(team, team_games_filepath)
@@ -27,22 +42,16 @@ class StatTracker
     end
   end
 
-  def self.game_stats_for_team(team, filepath)
-    single_team_id = team[:team_id]
-    self.game_teams(filepath).keep_if do |uniq_game_id, row|
-      row[:team_id] == single_team_id
-    end
-  end
-
-  def self.games(filepath)
-    game_data = CSV.table(filepath)
+  def self.create_games(games_filepath, team_games_filepath)
+    game_data = CSV.table(games_filepath)
     game_data.inject({}) do |game_hash, game|
-      game_hash[game[:game_id]] = Game.new(game)
+      relevant_game_team_stats = self.game_stats_for_game(game, team_games_filepath)
+      game_hash[game[:game_id]] = Game.new(game, relevant_game_team_stats)
       game_hash
     end
   end
 
-  def self.game_teams(filepath)
+  def self.create_game_teams(filepath)
     game_team_data = CSV.table(filepath)
     game_team_data.inject({}) do |game_team_hash, game_team_row|
       new_key = game_team_row[:game_id].to_s + "-" + game_team_row[:hoa].to_s
@@ -53,9 +62,9 @@ class StatTracker
 
   def self.from_csv(locations)
     all_files = {}
-    all_files[:games] = self.games(locations[:games])
-    all_files[:teams] = self.teams(locations[:teams], locations[:game_teams])
-    all_files[:game_teams] = self.game_teams(locations[:game_teams])
+    all_files[:games] = self.create_games(locations[:games], locations[:game_teams])
+    all_files[:teams] = self.create_teams(locations[:teams], locations[:game_teams])
+    all_files[:game_teams] = self.create_game_teams(locations[:game_teams])
     StatTracker.new(all_files)
   end
 

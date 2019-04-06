@@ -2,17 +2,18 @@ require './test/test_helper'
 
 class StatTrackerTest < Minitest::Test
   def setup
-    @team_stats = StatTracker.teams("data/team_info.csv", "data/dummy/game_teams_stats_mini.csv")
-    @game_stats = StatTracker.games("data/dummy/game_mini.csv")
-    @game_team_stats = StatTracker.game_teams("data/dummy/game_teams_stats_mini.csv")
+    # require "pry"; binding.pry
     @locations = {
       games: "data/dummy/game_mini.csv",
       teams: "data/team_info.csv",
       game_teams: "data/dummy/game_teams_stats_mini.csv"
     }
     @stats = StatTracker.from_csv(@locations)
+    @team_stats = StatTracker.create_teams(@locations[:teams], @locations[:game_teams])
+    @game_stats = StatTracker.create_games(@locations[:games], @locations[:game_teams])
+    @game_team_stats = StatTracker.create_game_teams(@locations[:game_teams])
     @med_locations = {
-      games: "data/dummy/game_mini.csv", # TO DO: haven't made med - use mini
+      games: "data/dummy/game_med.csv",
       teams: "data/dummy/team_info_med.csv",
       game_teams: "data/dummy/game_teams_stats_med.csv"
     }

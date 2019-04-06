@@ -16,14 +16,14 @@ module GameStats
 
   def biggest_blowout
     highest_difference_game = @games.values.max_by do |game|
-      (game.away_goals - game.home_goals).abs
+      (game.goals[:away] - game.goals[:home]).abs
     end
-    (highest_difference_game.away_goals - highest_difference_game.home_goals).abs
+    (highest_difference_game.goals[:away] - highest_difference_game.goals[:home]).abs
   end
 
   def percentage_home_wins
     home_game_wins = @games.count do |game_id, game|
-      game.outcome.start_with?("home win")
+      game.home_win
     end
     (home_game_wins.to_f / @games.count).round(2)
   end
