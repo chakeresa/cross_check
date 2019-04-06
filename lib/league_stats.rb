@@ -82,12 +82,25 @@ module LeagueStats
       scores[game.team_ids[:away]] += game.goals[:away]
       total_games[game.team_ids[:away]] += 1
     end
-
     averages = Hash.new(0)
     scores.map do |team_id, score|
       averages[team_id] = score.to_f / total_games[team_id]
     end
+    highest_average = averages.max_by {|team_id, average_goals| average_goals}
+    @teams[highest_average[0]].team_name
+  end
 
+  def highest_scoring_home_team
+    total_games = Hash.new(0)
+    scores = Hash.new(0)
+    @games.values.each do |game|
+      scores[game.team_ids[:home]] += game.goals[:home]
+      total_games[game.team_ids[:home]] += 1
+    end
+    averages = Hash.new(0)
+    scores.map do |team_id, score|
+      averages[team_id] = score.to_f / total_games[team_id]
+    end
     highest_average = averages.max_by {|team_id, average_goals| average_goals}
     @teams[highest_average[0]].team_name
   end
