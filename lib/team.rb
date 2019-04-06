@@ -14,7 +14,7 @@ class Team
     @team_name = team_info[:teamname]
     @abbreviation = team_info[:abbreviation]
     @link = team_info[:link]
-    @games = game_info
+    @games = game_info # TO DO: refactor
   end
 
   def home_win_count

@@ -7,7 +7,7 @@ class Game
               :home_win,
               :settled_in
 
-  def initialize(game_info)
+  def initialize(game_info, relevant_game_team_stats)
     @game_id = game_info[:game_id]
     @season = game_info[:season].to_s
     @type = game_info[:type]
@@ -15,6 +15,7 @@ class Game
     @goals = {home: game_info[:home_goals], away: game_info[:away_goals]}
     @home_win = game_info[:outcome].split[0] == "home"
     @settled_in = game_info[:outcome].split[2]
+    @coaches = {home: relevant_game_team_stats[:home][:head_coach], away: relevant_game_team_stats[:away][:head_coach]}
   end
 
   def total_goals
