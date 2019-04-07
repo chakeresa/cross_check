@@ -14,7 +14,7 @@ class Team
     @team_name = team_hash[:teamname]
     @abbreviation = team_hash[:abbreviation]
     @link = team_hash[:link]
-    @games = games_hash # TO DO: refactor
+    @games = games_hash
   end
 
   def home_win_count
