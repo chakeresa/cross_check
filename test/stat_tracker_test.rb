@@ -165,7 +165,6 @@ class StatTrackerTest < Minitest::Test
   end
 
   def test_most_goals_scored_in_a_single_game_for_team
-    skip
     assert_equal 7, @med_stats.most_goals_scored("15")
   end
 

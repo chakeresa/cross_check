@@ -70,6 +70,24 @@ module TeamStats
     end
     ((home_wins.to_f + away_wins) / team_object.games.count).round(2)
   end
+  # TO DO: Use this helper method in other methods?
+  def goals_for_team_in_game(team_object, game_object)
+    if game_object.team_ids[:home] == team_object.team_id
+      game_object.goals[:home]
+    else
+      game_object.goals[:away]
+    end
+  end
+
+  def most_goals_scored(team_id)
+    team_object = @teams[team_id.to_i]
+    highest_goal_game = team_object.games.values.max_by do |game|
+      goals_for_team_in_game(team_object, game)
+    end
+    goals_for_team_in_game(team_object, highest_goal_game)
+  end
+
+  
 
   def all_opponent_team_ids(team_id)
     team_object = @teams[team_id.to_i]
