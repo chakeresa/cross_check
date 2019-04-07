@@ -2,7 +2,6 @@ require './test/test_helper'
 
 class StatTrackerTest < Minitest::Test
   def setup
-    # require "pry"; binding.pry
     @locations = {
       games: "data/dummy/game_mini.csv",
       teams: "data/team_info.csv",
