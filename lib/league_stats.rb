@@ -6,7 +6,11 @@ module LeagueStats
   def best_offense
     best_offense_team = @teams.values.max_by do |team|
       total_team_goals = team.games.values.sum do |game|
-        game[:goals]
+        if game.team_ids[:home] == team.team_id
+          game.goals[:home]
+        else
+          game.goals[:away]
+        end
       end
       total_team_games = team.games.values.count
       if total_team_games == 0
@@ -21,7 +25,11 @@ module LeagueStats
   def worst_offense
     worst_offense_team = @teams.values.min_by do |team|
       total_team_goals = team.games.values.sum do |game|
-        game[:goals]
+        if game.team_ids[:home] == team.team_id
+          game.goals[:home]
+        else
+          game.goals[:away]
+        end
       end
       total_team_games = team.games.values.count
       if total_team_games == 0

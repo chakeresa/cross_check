@@ -27,7 +27,7 @@ class TeamTest < Minitest::Test
 
   def test_team_has_games
     assert_instance_of Hash, @team.games
-    assert_equal 27, @team.games["2012030312-home"][:shots]
+    assert_equal 27, @team.games[2012030312].shots[:home]
   end
 
   def test_home_win_count

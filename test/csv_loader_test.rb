@@ -61,14 +61,14 @@ class CsvLoaderTest < Minitest::Test
     assert_equal ({home: 14, away: 12}), single_game_from_attr.takeaways
   end
 
-  def test_game_stats_for_team_returns_hash_of_game_teams_for_only_that_team
+  def test_games_for_team_returns_hash_of_games_for_only_that_team
     mock_team = {team_id: 28}
-    hoa_data = @med_stats.game_stats_for_team(mock_team)
+    games_for_mock_team = @med_stats.games_for_team(mock_team)
 
-    assert_instance_of Hash, hoa_data
-    assert_equal 16, hoa_data.count
-    assert_equal "2014020990-home", hoa_data.keys.first
-    assert_equal 51.4, hoa_data["2015030415-away"][:faceoffwinpercentage]
+    assert_instance_of Hash, games_for_mock_team
+    assert_equal 16, games_for_mock_team.count
+    assert_equal 2014020990, games_for_mock_team.keys.first
+    assert_equal 51.4, games_for_mock_team[2015030415].face_off_win_percentage[:away]
   end
 
   def test_create_team_hash_has_keys_of_team_id_and_values_of_team_objects

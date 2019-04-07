@@ -29,7 +29,7 @@ class Game
     @pim = {home: relevant_game_team_stats[:home][:pim], away: relevant_game_team_stats[:away][:pim]}
     @power_play_opportunities = {home: relevant_game_team_stats[:home][:powerplayopportunities], away: relevant_game_team_stats[:away][:powerplayopportunities]}
     @power_play_goals = {home: relevant_game_team_stats[:home][:powerplaygoals], away: relevant_game_team_stats[:away][:powerplaygoals]}
-    @face_off_win_percentage = {home: relevant_game_team_stats[:home][:faceoffwinpercentages], away: relevant_game_team_stats[:away][:faceoffwinpercentages]}
+    @face_off_win_percentage = {home: relevant_game_team_stats[:home][:faceoffwinpercentage], away: relevant_game_team_stats[:away][:faceoffwinpercentage]}
     @giveaways = {home: relevant_game_team_stats[:home][:giveaways], away: relevant_game_team_stats[:away][:giveaways]}
     @takeaways = {home: relevant_game_team_stats[:home][:takeaways], away: relevant_game_team_stats[:away][:takeaways]}
   end
