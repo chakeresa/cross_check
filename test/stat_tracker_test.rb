@@ -161,7 +161,6 @@ class StatTrackerTest < Minitest::Test
   end
 
   def test_average_win_percentage_of_all_games_for_team
-    skip
     assert_equal 0.69, @med_stats.average_win_percentage("28")
   end
 

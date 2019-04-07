@@ -57,6 +57,20 @@ module TeamStats
     end
   end
 
+  def average_win_percentage(team_id)
+    team_object = @teams[team_id.to_i]
+    home_wins = 0
+    away_wins = 0
+    team_object.games.values.each do |game|
+      if game.team_ids[:home] == team_object.team_id && game.home_win
+        home_wins += 1
+      elsif game.team_ids[:away] == team_object.team_id && !game.home_win
+        away_wins += 1
+      end
+    end
+    ((home_wins.to_f + away_wins) / team_object.games.count).round(2)
+  end
+
   def all_opponent_team_ids(team_id)
     team_object = @teams[team_id.to_i]
     all_opp_team_ids = team_object.games.values.map do |game|
