@@ -62,7 +62,6 @@ class CsvLoader
     to_export = {}
     to_export[:games] = @game_hash
     to_export[:teams] = @team_hash
-    to_export[:game_teams] = @game_teams_hash # TO DO: delete after team is refactored
     to_export
   end
 end
