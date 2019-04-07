@@ -71,6 +71,26 @@ class CsvLoaderTest < Minitest::Test
     assert_equal 51.4, hoa_data["2015030415-away"][:faceoffwinpercentage]
   end
 
+  def test_create_team_hash_has_keys_of_team_id_and_values_of_team_objects
+    team_hash_1 = @med_stats.create_team_hash
+    single_team = team_hash_1[18]
+
+    assert_equal [5, 15, 18, 28], team_hash_1.keys.sort
+    assert_equal 4, team_hash_1.count
+    assert_instance_of Team, single_team
+    assert_equal 34, single_team.franchise_id
+    assert_equal 16, single_team.games.count
+
+    team_hash_attr = @med_stats.team_hash
+    single_team_from_attr = team_hash_attr[18]
+
+    assert_equal [5, 15, 18, 28], team_hash_attr.keys.sort
+    assert_equal 4, team_hash_attr.count
+    assert_instance_of Team, single_team_from_attr
+    assert_equal 34, single_team_from_attr.franchise_id
+    assert_equal 16, single_team_from_attr.games.count
+  end
+
 
 
 

@@ -3,7 +3,8 @@ class CsvLoader
               :team_info_csv_filepath,
               :game_teams_info_csv_filepath,
               :game_teams_hash,
-              :game_hash
+              :game_hash,
+              :team_hash
 
   def initialize(locations)
     @game_csv_filepath = locations[:games]
@@ -11,14 +12,15 @@ class CsvLoader
     @game_teams_info_csv_filepath = locations[:game_teams]
     @game_teams_hash = create_game_teams_hash
     @game_hash = create_game_hash
+    @team_hash = create_team_hash
   end
 
   def create_game_teams_hash
     game_team_data = CSV.table(@game_teams_info_csv_filepath)
-    game_team_data.inject({}) do |game_team_hash, game_team_row|
+    game_team_data.inject({}) do |game_team_hash_builder, game_team_row|
       new_key = game_team_row[:game_id].to_s + "-" + game_team_row[:hoa].to_s
-      game_team_hash[new_key] = game_team_row
-      game_team_hash
+      game_team_hash_builder[new_key] = game_team_row
+      game_team_hash_builder
     end
   end
 
@@ -32,32 +34,32 @@ class CsvLoader
 
   def create_game_hash
     game_data = CSV.table(@game_csv_filepath)
-    game_data.inject({}) do |game_hash, game|
+    game_data.inject({}) do |game_hash_builder, game|
       relevant_game_team_stats = game_stats_for_game(game)
-      game_hash[game[:game_id]] = Game.new(game, relevant_game_team_stats)
-      game_hash
+      game_hash_builder[game[:game_id]] = Game.new(game, relevant_game_team_stats)
+      game_hash_builder
     end
   end
 
   def game_stats_for_team(team)
     single_team_id = team[:team_id]
-    relevant_game_team_hash = @game_teams_hash
+    relevant_game_team_hash = @game_teams_hash.clone
     relevant_game_team_hash.keep_if do |uniq_game_id, row|
       row[:team_id] == single_team_id
     end
   end
 
+  def create_team_hash
+    team_data = CSV.table(@team_info_csv_filepath)
+    team_data.inject({}) do |team_hash_builder, team|
+      relevant_game_team_stats = game_stats_for_team(team)
+      team_hash_builder[team[:team_id]] = Team.new(team, relevant_game_team_stats)
+      team_hash_builder
+    end
+  end
 
 
-  #
-  # def create_teams(teams_filepath, team_games_filepath)
-  #   team_data = CSV.table(teams_filepath)
-  #   team_data.inject({}) do |team_hash, team|
-  #     relevant_game_team_stats = game_stats_for_team(team, team_games_filepath)
-  #     team_hash[team[:team_id]] = Team.new(team, relevant_game_team_stats)
-  #     team_hash
-  #   end
-  # end
+
   #
   # def load_all(locations)
   #   all_files = {}
