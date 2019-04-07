@@ -46,6 +46,10 @@ module TeamStats
     ((home_wins.to_f + away_wins) / (home_matches + away_matches)).round(2)
   end
 
+  def rival(team_id)
+    head_to_head(team_id).min_by { |team_name, win_pct| win_pct }.first
+  end
+
   def head_to_head(team_id)
     team_object = @teams[team_id.to_i]
     all_opp_team_ids = all_opponent_team_ids(team_id)
