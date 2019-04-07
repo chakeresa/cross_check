@@ -124,6 +124,22 @@ class StatTrackerTest < Minitest::Test
     assert_equal "Hurricanes", @stats.worst_defense
   end
 
+  def test_highest_scoring_visitor_returns_name_of_team_with_highest_average_score_across_all_seasons_when_away
+    assert_equal "Sharks", @med_stats.highest_scoring_visitor
+  end
+
+  def test_highest_scoring_home_team_returns_name_of_team_with_highest_average_score_across_all_seasons_when_home
+    assert_equal "Penguins", @med_stats.highest_scoring_home_team
+  end
+
+  def test_lowest_scoring_visitor_returns_name_of_team_with_lowest_average_score_across_all_seasons_when_away
+    assert_equal "Predators", @med_stats.lowest_scoring_visitor
+  end
+
+  def test_lowest_scoring_home_team_returns_name_of_team_with_lowest_average_score_across_all_seasons_when_home
+    assert_equal "Capitals", @med_stats.lowest_scoring_home_team
+  end
+
   def test_winningest_team_returns_name_of_team_with_highest_win_percent_of_all_time
     assert_equal "Lightning", @med_stats.winningest_team
   end
