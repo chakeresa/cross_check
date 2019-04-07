@@ -142,8 +142,17 @@ class StatTrackerTest < Minitest::Test
     assert_equal expected, @med_stats.team_info("15")
   end
 
+  def test_win_percentage_for_season_returns_win_fraction_float
+    predators = @med_stats.teams[18]
+    assert_equal 0.33, @med_stats.win_percentage_for_season(predators, "20142015")
+  end
+
+  def test_all_season_ids_returns_array_of_all_seasons
+    expected = ["20142015", "20152016", "20162017", "20172018"]
+    assert_equal expected, @med_stats.all_season_ids("18")
+  end
+
   def test_best_season_returns_season_with_the_highest_win_percentage_for_team
-    skip
     assert_equal "20162017", @med_stats.best_season("5")
   end
 
@@ -179,9 +188,9 @@ class StatTrackerTest < Minitest::Test
     assert_equal [5, 15, 28], @med_stats.all_opponent_team_ids(18)
   end
 
-  def test_win_percentage_returns_win_fraction_float_between_teams
+  def test_win_percentage_for_opponent_returns_win_fraction_float_between_teams
     predators = @med_stats.teams[18]
-    assert_equal 0.25, @med_stats.win_percentage(predators, 5)
+    assert_equal 0.25, @med_stats.win_percentage_for_opponent(predators, 5)
   end
 
   def test_head_to_head_returns_a_hash_with_opponent_name_as_key_and_win_pc_as_value
