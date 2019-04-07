@@ -169,7 +169,6 @@ class StatTrackerTest < Minitest::Test
   end
 
   def test_fewest_goals_scored_in_a_single_game_for_team
-    skip
     assert_equal 0, @med_stats.fewest_goals_scored("5")
   end
 

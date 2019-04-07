@@ -87,7 +87,13 @@ module TeamStats
     goals_for_team_in_game(team_object, highest_goal_game)
   end
 
-  
+  def fewest_goals_scored(team_id)
+    team_object = @teams[team_id.to_i]
+    fewest_goal_game = team_object.games.values.min_by do |game|
+      goals_for_team_in_game(team_object, game)
+    end
+    goals_for_team_in_game(team_object, fewest_goal_game)
+  end
 
   def all_opponent_team_ids(team_id)
     team_object = @teams[team_id.to_i]
