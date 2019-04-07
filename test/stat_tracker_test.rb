@@ -23,7 +23,6 @@ class StatTrackerTest < Minitest::Test
   def test_from_csv_returns_a_hash_of_hashes
     assert_equal 15, @stats.games.length
     assert_equal 33, @stats.teams.length
-    assert_equal 30, @stats.game_teams.length
   end
 
   # GameStats module tests

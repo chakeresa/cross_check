@@ -41,19 +41,19 @@ class CsvLoader
     end
   end
 
-  def game_stats_for_team(team)
+  def games_for_team(team)
     single_team_id = team[:team_id]
-    relevant_game_team_hash = @game_teams_hash.clone
-    relevant_game_team_hash.keep_if do |uniq_game_id, row|
-      row[:team_id] == single_team_id
+    relevant_games_hash = @game_hash.clone
+    relevant_games_hash.keep_if do |uniq_game_id, game|
+      game.team_ids.values.include?(single_team_id)
     end
   end
 
   def create_team_hash
     team_data = CSV.table(@team_info_csv_filepath)
     team_data.inject({}) do |team_hash_builder, team|
-      relevant_game_team_stats = game_stats_for_team(team)
-      team_hash_builder[team[:team_id]] = Team.new(team, relevant_game_team_stats)
+      relevant_games = games_for_team(team)
+      team_hash_builder[team[:team_id]] = Team.new(team, relevant_games)
       team_hash_builder
     end
   end
@@ -62,7 +62,6 @@ class CsvLoader
     to_export = {}
     to_export[:games] = @game_hash
     to_export[:teams] = @team_hash
-    to_export[:game_teams] = @game_teams_hash # TO DO: delete after team is refactored
     to_export
   end
 end

@@ -7,37 +7,37 @@ class Team
               :link,
               :games
 
-  def initialize(team_info, game_info)
-    @team_id = team_info[:team_id]
-    @franchise_id = team_info[:franchiseid]
-    @short_name = team_info[:shortname]
-    @team_name = team_info[:teamname]
-    @abbreviation = team_info[:abbreviation]
-    @link = team_info[:link]
-    @games = game_info # TO DO: refactor
+  def initialize(team_hash, games_hash)
+    @team_id = team_hash[:team_id]
+    @franchise_id = team_hash[:franchiseid]
+    @short_name = team_hash[:shortname]
+    @team_name = team_hash[:teamname]
+    @abbreviation = team_hash[:abbreviation]
+    @link = team_hash[:link]
+    @games = games_hash # TO DO: refactor
   end
 
   def home_win_count
     @games.values.count do |game|
-      game[:hoa] == "home" && game[:won] == "TRUE"
+      game.team_ids[:home] == @team_id && game.home_win
     end
   end
 
   def home_loss_count
     @games.values.count do |game|
-      game[:hoa] == "home" && game[:won] == "FALSE"
+      game.team_ids[:home] == @team_id && !game.home_win
     end
   end
 
   def away_win_count
     @games.values.count do |game|
-      game[:hoa] == "away" && game[:won] == "TRUE"
+      game.team_ids[:away] == @team_id && !game.home_win
     end
   end
 
   def away_loss_count
     @games.values.count do |game|
-      game[:hoa] == "away" && game[:won] == "FALSE"
+      game.team_ids[:away] == @team_id && game.home_win
     end
   end
 

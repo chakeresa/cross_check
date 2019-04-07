@@ -10,13 +10,11 @@ class StatTracker
   include LeagueStats
 
   attr_reader :games,
-              :teams,
-              :game_teams # TO DO: delete after team is refactored
+              :teams
 
   def initialize(all_files)
     @games = all_files[:games]
     @teams = all_files[:teams]
-    @game_teams = all_files[:game_teams] # TO DO: delete after team is refactored
   end
 
   def self.from_csv(locations)
