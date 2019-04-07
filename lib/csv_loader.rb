@@ -15,7 +15,7 @@ class CsvLoader
 
   def create_game_teams_hash
     game_team_data = CSV.table(@game_teams_info_csv_filepath)
-    delete_me = game_team_data.inject({}) do |game_team_hash, game_team_row|
+    game_team_data.inject({}) do |game_team_hash, game_team_row|
       new_key = game_team_row[:game_id].to_s + "-" + game_team_row[:hoa].to_s
       game_team_hash[new_key] = game_team_row
       game_team_hash
@@ -39,6 +39,13 @@ class CsvLoader
     end
   end
 
+  def game_stats_for_team(team)
+    single_team_id = team[:team_id]
+    relevant_game_team_hash = @game_teams_hash
+    relevant_game_team_hash.keep_if do |uniq_game_id, row|
+      row[:team_id] == single_team_id
+    end
+  end
 
 
 
@@ -49,13 +56,6 @@ class CsvLoader
   #     relevant_game_team_stats = game_stats_for_team(team, team_games_filepath)
   #     team_hash[team[:team_id]] = Team.new(team, relevant_game_team_stats)
   #     team_hash
-  #   end
-  # end
-
-  # def game_stats_for_team(team, filepath)
-  #   single_team_id = team[:team_id]
-  #   create_game_teams(filepath).keep_if do |uniq_game_id, row|
-  #     row[:team_id] == single_team_id
   #   end
   # end
   #
