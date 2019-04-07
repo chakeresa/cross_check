@@ -2,15 +2,15 @@ class CsvLoader
   attr_reader :game_csv_filepath,
               :team_info_csv_filepath,
               :game_teams_info_csv_filepath,
-              :game_teams_hash
-              # :game_hash
+              :game_teams_hash,
+              :game_hash
 
   def initialize(locations)
     @game_csv_filepath = locations[:games]
     @team_info_csv_filepath = locations[:teams]
     @game_teams_info_csv_filepath = locations[:game_teams]
     @game_teams_hash = create_game_teams_hash
-    # @game_hash = create_game_hash
+    @game_hash = create_game_hash
   end
 
   def create_game_teams_hash
@@ -30,17 +30,17 @@ class CsvLoader
     hash
   end
 
+  def create_game_hash
+    game_data = CSV.table(@game_csv_filepath)
+    game_data.inject({}) do |game_hash, game|
+      relevant_game_team_stats = game_stats_for_game(game)
+      game_hash[game[:game_id]] = Game.new(game, relevant_game_team_stats)
+      game_hash
+    end
+  end
 
 
 
-  # def create_game_hash
-  #   game_data = CSV.table(@game_csv_filepath)
-  #   game_data.inject({}) do |game_hash, game|
-  #     relevant_game_team_stats = game_stats_for_game(game, team_games_filepath)
-  #     game_hash[game[:game_id]] = Game.new(game, relevant_game_team_stats)
-  #     game_hash
-  #   end
-  # end
 
   #
   # def create_teams(teams_filepath, team_games_filepath)

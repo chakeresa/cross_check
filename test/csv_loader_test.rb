@@ -43,6 +43,27 @@ class CsvLoaderTest < Minitest::Test
     assert_equal 17, hoa_data[:away][:giveaways]
   end
 
+  def test_create_game_hash_has_keys_of_game_id_and_values_of_game_objects
+    game_hash_1 = @med_stats.create_game_hash
+    single_game = game_hash_1[2015021206]
+
+    assert_equal 2015021206, game_hash_1.keys[1]
+    assert_instance_of Game, single_game
+    assert_equal ({home: 15, away: 5}), single_game.team_ids
+    assert_equal ({home: 14, away: 12}), single_game.takeaways
+
+    game_hash_attr = @med_stats.game_hash
+    single_game_from_attr = game_hash_attr[2015021206]
+
+    assert_equal 2015021206, game_hash_attr.keys[1]
+    assert_instance_of Game, single_game_from_attr
+    assert_equal ({home: 15, away: 5}), single_game_from_attr.team_ids
+    assert_equal ({home: 14, away: 12}), single_game_from_attr.takeaways
+  end
+
+
+
+
   def test_teams_makes_a_hash_with_team_id_as_keys
     skip
     assert_instance_of Hash, @team_stats
