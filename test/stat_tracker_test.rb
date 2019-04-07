@@ -164,6 +164,20 @@ class StatTrackerTest < Minitest::Test
     assert_equal 0.69, @med_stats.average_win_percentage("28")
   end
 
+  def test_goals_for_team_in_game_returns_number_of_goals_for_team_in_a_game
+    predators = mock("predators")
+    predators.stubs(:team_id).returns(18)
+    sharks = mock("sharks")
+    sharks.stubs(:team_id).returns(28)
+    game1 = mock("game1")
+    goals_hash = {home: 5, away: 7}
+    team_id_hash = {home: 18, away: 28}
+    game1.stubs(:goals).returns(goals_hash)
+    game1.stubs(:team_ids).returns(team_id_hash)
+    assert_equal 5, @med_stats.goals_for_team_in_game(predators, game1)
+    assert_equal 7, @med_stats.goals_for_team_in_game(sharks, game1)
+  end
+
   def test_most_goals_scored_in_a_single_game_for_team
     assert_equal 7, @med_stats.most_goals_scored("15")
   end
