@@ -2,7 +2,13 @@ require './test/test_helper'
 
 class TeamTest < Minitest::Test
   def setup
-    @team_stats = StatTracker.create_teams("data/team_info.csv", "data/dummy/game_teams_stats_mini.csv")
+    @locations = {
+      games: "data/dummy/game_mini.csv",
+      teams: "data/dummy/team_info_mini.csv",
+      game_teams: "data/dummy/game_teams_stats_mini.csv"
+    }
+    @stats = StatTracker.from_csv(@locations)
+    @team_stats = @stats.teams
     @team = @team_stats[5]
   end
 
