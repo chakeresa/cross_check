@@ -9,11 +9,7 @@ module LeagueStats
         game[:goals]
       end
       total_team_games = team.games.values.count
-      if total_team_games == 0
-        -5 # TO DO: consider using medium data set for tests, then we can delete this
-      else
-        total_team_goals.to_f / total_team_games
-      end
+      total_team_goals.to_f / total_team_games
     end
     best_offense_team.team_name
   end
@@ -24,11 +20,7 @@ module LeagueStats
         game[:goals]
       end
       total_team_games = team.games.values.count
-      if total_team_games == 0
-        500
-      else
-        total_team_goals.to_f / total_team_games
-      end
+      total_team_goals.to_f / total_team_games
     end
     worst_offense_team.team_name
   end
@@ -45,11 +37,7 @@ module LeagueStats
         end
       end
       total_team_games = team.games.values.count
-      if total_team_games == 0
-        500
-      else
-        total_opponent_goals.to_f / total_team_games
-      end
+      total_opponent_goals.to_f / total_team_games
     end
     best_defense_team.team_name
   end
@@ -66,11 +54,7 @@ module LeagueStats
         end
       end
       total_team_games = team.games.values.count
-      if total_team_games == 0
-        -5
-      else
-        total_opponent_goals.to_f / total_team_games
-      end
+      total_opponent_goals.to_f / total_team_games
     end
     worst_defense_team.team_name
   end

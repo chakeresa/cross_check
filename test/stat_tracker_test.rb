@@ -87,19 +87,19 @@ class StatTrackerTest < Minitest::Test
   end
 
   def test_best_offense_returns_team_name_with_highest_average_goals
-    assert_equal "Blackhawks", @stats.best_offense
+    assert_equal "Capitals", @med_stats.best_offense
   end
 
   def test_worst_offense_returns_team_name_with_lowest_average_goals
-    assert_equal "Blues", @stats.worst_offense
+    assert_equal "Predators", @med_stats.worst_offense
   end
 
   def test_best_defense_returns_team_name_with_lowest_average_opponent_goals
-    assert_equal "Canucks", @stats.best_defense
+    assert_equal "Sharks", @med_stats.best_defense
   end
 
   def test_worst_defense_returns_team_name_with_highest_average_opponent_goals
-    assert_equal "Hurricanes", @stats.worst_defense
+    assert_equal "Capitals", @med_stats.worst_defense
   end
 
   def test_highest_scoring_visitor_returns_name_of_team_with_highest_average_score_across_all_seasons_when_away
@@ -119,15 +119,15 @@ class StatTrackerTest < Minitest::Test
   end
 
   def test_winningest_team_returns_name_of_team_with_highest_win_percent_of_all_time
-    assert_equal "Lightning", @med_stats.winningest_team
+    assert_equal "Sharks", @med_stats.winningest_team
   end
 
   def test_best_fans_returns_name_of_team_with_largest_diff_bw_home_and_away_win_percent
-    assert_equal "Lightning", @med_stats.best_fans
+    assert_equal "Predators", @med_stats.best_fans
   end
 
   def test_worst_fans_returns_ary_of_all_teams_w_better_away_than_home_win_percent
-    assert_equal ["Flyers"], @med_stats.worst_fans
+    assert_equal ["Capitals"], @med_stats.worst_fans
   end
 
 end
