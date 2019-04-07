@@ -2,16 +2,12 @@ require './test/test_helper'
 
 class StatTrackerTest < Minitest::Test
   def setup
-    # require "pry"; binding.pry
     @locations = {
       games: "data/dummy/game_mini.csv",
       teams: "data/team_info.csv",
       game_teams: "data/dummy/game_teams_stats_mini.csv"
     }
     @stats = StatTracker.from_csv(@locations)
-    @team_stats = StatTracker.create_teams(@locations[:teams], @locations[:game_teams])
-    @game_stats = StatTracker.create_games(@locations[:games], @locations[:game_teams])
-    @game_team_stats = StatTracker.create_game_teams(@locations[:game_teams])
     @med_locations = {
       games: "data/dummy/game_med.csv",
       teams: "data/dummy/team_info_med.csv",
@@ -22,24 +18,6 @@ class StatTrackerTest < Minitest::Test
 
   def test_it_exists
     assert_instance_of StatTracker, @stats
-  end
-
-  def test_teams_makes_a_hash_with_team_id_as_keys
-    assert_instance_of Hash, @team_stats
-    assert_equal 1, @team_stats.keys[0]
-    assert_equal 4, @team_stats.keys[1]
-  end
-
-  def test_games_makes_a_hash_with_game_id_as_keys
-    assert_instance_of Hash, @game_stats
-    assert_equal 2012030221, @game_stats.keys[0]
-    assert_equal 2012030222, @game_stats.keys[1]
-  end
-
-  def test_game_teams_makes_a_hash_with_game_id_and_HoA_as_keys
-    assert_instance_of Hash, @game_team_stats
-    assert_equal "2012030221-away", @game_team_stats.keys[0]
-    assert_equal "2012030221-home", @game_team_stats.keys[1]
   end
 
   def test_from_csv_returns_a_hash_of_hashes
