@@ -155,5 +155,4 @@ module LeagueStats
     end
     # TO DO: consider combining these 2 enums by using inject
   end
-
 end

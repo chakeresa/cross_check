@@ -80,7 +80,7 @@ class StatTrackerTest < Minitest::Test
     assert_equal expected, @stats.average_goals_by_season
   end
 
-  # TeamStats module tests
+  # LeagueStats module tests
   def test_count_of_teams_returns_total_number_of_unique_team_names_in_data
     assert_equal 33, @stats.count_of_teams
   end
@@ -129,4 +129,53 @@ class StatTrackerTest < Minitest::Test
     assert_equal ["Capitals"], @med_stats.worst_fans
   end
 
+  # TeamStats module tests
+  def test_team_info_hash_has_key_value_pairs_for_each_attribute_for_team
+    expected = {
+      "team_id" => "15",
+      "franchise_id" => "24",
+      "short_name" => "Washington",
+      "team_name" => "Capitals",
+      "abbreviation" => "WSH",
+      "link" => "/api/v1/teams/15"
+    }
+    assert_equal expected, @med_stats.team_info("15")
+  end
+
+  def test_best_season_returns_season_with_the_highest_win_percentage_for_team
+    skip
+    assert_equal "20162017", @med_stats.best_season("5")
+  end
+
+  def test_worst_season_returns_season_with_the_lowest_win_percentage_for_team
+    skip
+    assert_equal "20142015", @med_stats.worst_season("18")
+  end
+
+  def test_average_win_percentage_of_all_games_for_team
+    skip
+    assert_equal 0.69, @med_stats.average_win_percentage("28")
+  end
+
+  def test_most_goals_scored_in_a_single_game_for_team
+    skip
+    assert_equal 7, @med_stats.most_goals_scored("15")
+  end
+
+  def test_fewest_goals_scored_in_a_single_game_for_team
+    skip
+    assert_equal 0, @med_stats.fewest_goals_scored("5")
+  end
+
+  def test_favorite_opponent_returns_opponent_with_lowest_win_percentage_against_team
+    skip
+    assert_equal "Capitals", @med_stats.favorite_opponent("18")
+  end
+
+  def test_rival_returns_opponent_with_lowest_win_percentage_against_team
+    skip
+    assert_equal "Penguins", @med_stats.rival("18")
+  end
+
+  # def test_head_to_head_returns_a
 end
