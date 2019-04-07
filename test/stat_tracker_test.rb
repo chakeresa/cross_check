@@ -168,7 +168,6 @@ class StatTrackerTest < Minitest::Test
   end
 
   def test_favorite_opponent_returns_opponent_with_lowest_win_percentage_against_team
-    skip
     assert_equal "Capitals", @med_stats.favorite_opponent("18")
   end
 

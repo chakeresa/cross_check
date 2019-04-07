@@ -46,6 +46,10 @@ module TeamStats
     ((home_wins.to_f + away_wins) / (home_matches + away_matches)).round(2)
   end
 
+  def favorite_opponent(team_id)
+    head_to_head(team_id).max_by { |team_name, win_pct| win_pct }.first
+  end
+
   def rival(team_id)
     head_to_head(team_id).min_by { |team_name, win_pct| win_pct }.first
   end
