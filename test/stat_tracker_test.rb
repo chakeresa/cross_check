@@ -177,5 +177,21 @@ class StatTrackerTest < Minitest::Test
     assert_equal "Penguins", @med_stats.rival("18")
   end
 
-  # def test_head_to_head_returns_a
+  def test_all_opponent_team_ids_returns_opponent_team_ids_array
+    assert_equal [5, 15, 28], @med_stats.all_opponent_team_ids(18)
+  end
+
+  def test_win_percentage_returns_win_fraction_float_between_teams
+    predators = @med_stats.teams[18]
+    assert_equal 0.25, @med_stats.win_percentage(predators, 5)
+  end
+
+  def test_head_to_head_returns_a_hash_with_opponent_name_as_key_and_win_pc_as_value
+    expected = {
+        "Penguins" => 0.25,
+        "Capitals" => 0.75,
+        "Sharks" => 0.38
+    }
+    assert_equal expected, @med_stats.head_to_head("18")
+  end
 end
