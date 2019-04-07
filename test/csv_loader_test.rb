@@ -34,6 +34,15 @@ class CsvLoaderTest < Minitest::Test
     assert_instance_of CSV::Row, away_game
   end
 
+  def test_game_stats_for_game_returns_hash_of_game_teams_for_only_that_game
+    mock_game = {game_id: "2014020990"}
+    hoa_data = @med_stats.game_stats_for_game(mock_game)
+
+    assert_equal [:home, :away], hoa_data.keys
+    assert_equal 45.6, hoa_data[:home][:faceoffwinpercentage]
+    assert_equal 17, hoa_data[:away][:giveaways]
+  end
+
   def test_teams_makes_a_hash_with_team_id_as_keys
     skip
     assert_instance_of Hash, @team_stats
