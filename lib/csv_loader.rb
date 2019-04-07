@@ -57,15 +57,4 @@ class CsvLoader
       team_hash_builder
     end
   end
-
-
-
-  #
-  # def load_all(locations)
-  #   all_files = {}
-  #   all_files[:games] = create_games(locations[:games], locations[:game_teams])
-  #   all_files[:teams] = create_teams(locations[:teams], locations[:game_teams])
-  #   all_files[:game_teams] = create_game_teams(locations[:game_teams])
-  #   StatTracker.new(all_files)
-  # end
 end

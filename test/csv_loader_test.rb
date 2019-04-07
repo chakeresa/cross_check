@@ -90,35 +90,4 @@ class CsvLoaderTest < Minitest::Test
     assert_equal 34, single_team_from_attr.franchise_id
     assert_equal 16, single_team_from_attr.games.count
   end
-
-
-
-
-  def test_teams_makes_a_hash_with_team_id_as_keys
-    skip
-    assert_instance_of Hash, @team_stats
-    assert_equal 1, @team_stats.keys[0]
-    assert_equal 4, @team_stats.keys[1]
-  end
-
-  def test_games_makes_a_hash_with_game_id_as_keys
-    skip
-    assert_instance_of Hash, @game_stats
-    assert_equal 2012030221, @game_stats.keys[0]
-    assert_equal 2012030222, @game_stats.keys[1]
-  end
-
-  def test_game_teams_makes_a_hash_with_game_id_and_HoA_as_keys
-    skip
-    assert_instance_of Hash, @game_team_stats
-    assert_equal "2012030221-away", @game_team_stats.keys[0]
-    assert_equal "2012030221-home", @game_team_stats.keys[1]
-  end
-
-  def test_from_csv_returns_a_hash_of_hashes
-    skip
-    assert_equal 15, @stats.games.length
-    assert_equal 33, @stats.teams.length
-    assert_equal 30, @stats.game_teams.length
-  end
 end
