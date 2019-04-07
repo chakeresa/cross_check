@@ -49,6 +49,14 @@ module TeamStats
     end
   end
 
+  def worst_season(team_id)
+    team_object = @teams[team_id.to_i]
+    all_seas_ids = all_season_ids(team_id)
+    all_seas_ids.min_by do |seas_id|
+      win_percentage_for_season(team_object, seas_id)
+    end
+  end
+
   def all_opponent_team_ids(team_id)
     team_object = @teams[team_id.to_i]
     all_opp_team_ids = team_object.games.values.map do |game|

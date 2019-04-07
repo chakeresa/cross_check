@@ -157,7 +157,6 @@ class StatTrackerTest < Minitest::Test
   end
 
   def test_worst_season_returns_season_with_the_lowest_win_percentage_for_team
-    skip
     assert_equal "20142015", @med_stats.worst_season("18")
   end
 
