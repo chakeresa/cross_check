@@ -142,40 +142,73 @@ class StatTrackerTest < Minitest::Test
     assert_equal expected, @med_stats.team_info("15")
   end
 
+  def test_win_percentage_for_season_returns_win_fraction_float
+    predators = @med_stats.teams[18]
+    assert_equal 0.33, @med_stats.win_percentage_for_season(predators, "20142015")
+  end
+
+  def test_all_season_ids_returns_array_of_all_seasons
+    expected = ["20142015", "20152016", "20162017", "20172018"]
+    assert_equal expected, @med_stats.all_season_ids("18")
+  end
+
   def test_best_season_returns_season_with_the_highest_win_percentage_for_team
-    skip
     assert_equal "20162017", @med_stats.best_season("5")
   end
 
   def test_worst_season_returns_season_with_the_lowest_win_percentage_for_team
-    skip
     assert_equal "20142015", @med_stats.worst_season("18")
   end
 
   def test_average_win_percentage_of_all_games_for_team
-    skip
     assert_equal 0.69, @med_stats.average_win_percentage("28")
   end
 
+  def test_goals_for_team_in_game_returns_number_of_goals_for_team_in_a_game
+    predators = mock("predators")
+    predators.stubs(:team_id).returns(18)
+    sharks = mock("sharks")
+    sharks.stubs(:team_id).returns(28)
+    game1 = mock("game1")
+    goals_hash = {home: 5, away: 7}
+    team_id_hash = {home: 18, away: 28}
+    game1.stubs(:goals).returns(goals_hash)
+    game1.stubs(:team_ids).returns(team_id_hash)
+    assert_equal 5, @med_stats.goals_for_team_in_game(predators, game1)
+    assert_equal 7, @med_stats.goals_for_team_in_game(sharks, game1)
+  end
+
   def test_most_goals_scored_in_a_single_game_for_team
-    skip
     assert_equal 7, @med_stats.most_goals_scored("15")
   end
 
   def test_fewest_goals_scored_in_a_single_game_for_team
-    skip
     assert_equal 0, @med_stats.fewest_goals_scored("5")
   end
 
   def test_favorite_opponent_returns_opponent_with_lowest_win_percentage_against_team
-    skip
     assert_equal "Capitals", @med_stats.favorite_opponent("18")
   end
 
   def test_rival_returns_opponent_with_lowest_win_percentage_against_team
-    skip
     assert_equal "Penguins", @med_stats.rival("18")
   end
 
-  # def test_head_to_head_returns_a
+  def test_all_opponent_team_ids_returns_opponent_team_ids_array
+    assert_equal [5, 15, 28], @med_stats.all_opponent_team_ids(18)
+  end
+
+  def test_win_percentage_for_opponent_returns_win_fraction_float_between_teams
+    predators = @med_stats.teams[18]
+    assert_equal 0.25, @med_stats.win_percentage_for_opponent(predators, 5)
+  end
+
+  def test_head_to_head_returns_a_hash_with_opponent_name_as_key_and_win_pc_as_value
+    expected = {
+        "Penguins" => 0.25,
+        "Capitals" => 0.75,
+        "Sharks" => 0.38
+    }
+    assert_equal expected, @med_stats.head_to_head("18")
+  end
 end
