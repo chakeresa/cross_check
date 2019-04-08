@@ -16,18 +16,19 @@ module TeamStats
     away_matches = 0
     home_wins = 0
     away_wins = 0
-    team.games.values.each do |game|
-      if game.season == season
-        if game.team_ids[:home] == team.team_id
-          home_matches += 1
-          if game.home_win
-            home_wins += 1
-          end
-        elsif game.team_ids[:away] == team.team_id
-          away_matches += 1
-          if !game.home_win
-            away_wins += 1
-          end
+    team.games[:home].each do |home_game|
+      if home_game.season == season
+        home_matches += 1
+        if home_game.home_win
+          home_wins += 1
+        end
+      end
+    end
+    team.games[:away].each do |away_game|
+      if away_game.season == season
+        away_matches += 1
+        if !away_game.home_win
+          away_wins += 1
         end
       end
     end
@@ -36,7 +37,8 @@ module TeamStats
 
   def all_season_ids(team_id)
     team_object = @teams[team_id.to_i]
-    all_seas_ids = team_object.games.values.map do |game|
+    all_games_for_team = team_object.games[:home] + team_object.games[:away]
+    all_seas_ids = all_games_for_team.map do |game|
       game.season
     end.uniq
   end
@@ -59,16 +61,13 @@ module TeamStats
 
   def average_win_percentage(team_id)
     team_object = @teams[team_id.to_i]
-    home_wins = 0
-    away_wins = 0
-    team_object.games.values.each do |game|
-      if game.team_ids[:home] == team_object.team_id && game.home_win
-        home_wins += 1
-      elsif game.team_ids[:away] == team_object.team_id && !game.home_win
-        away_wins += 1
-      end
+    home_wins = team_object.games[:home].count do |home_game|
+      home_game.home_win
     end
-    ((home_wins.to_f + away_wins) / team_object.games.count).round(2)
+    away_wins = team_object.games[:away].count do |away_game|
+      !away_game.home_win
+    end
+    ((home_wins.to_f + away_wins) / team_object.total_game_count).round(2)
   end
   # TO DO: Use this helper method in other methods?
   def goals_for_team_in_game(team_object, game_object)
@@ -81,30 +80,23 @@ module TeamStats
 
   def most_goals_scored(team_id)
     team_object = @teams[team_id.to_i]
-    highest_goal_game = team_object.games.values.max_by do |game|
-      goals_for_team_in_game(team_object, game)
-    end
-    goals_for_team_in_game(team_object, highest_goal_game)
+    team_object.most_goals_scored_in_a_game
   end
 
   def fewest_goals_scored(team_id)
     team_object = @teams[team_id.to_i]
-    fewest_goal_game = team_object.games.values.min_by do |game|
-      goals_for_team_in_game(team_object, game)
-    end
-    goals_for_team_in_game(team_object, fewest_goal_game)
+    team_object.fewest_goals_scored_in_a_game
   end
 
   def all_opponent_team_ids(team_id)
     team_object = @teams[team_id.to_i]
-    all_opp_team_ids = team_object.games.values.map do |game|
-      if game.team_ids[:home] == team_id
-        game.team_ids[:away]
-      else
-        game.team_ids[:home]
-      end
-    end.uniq
-    all_opp_team_ids.delete(team_id.to_i)
+    all_opp_team_ids_when_home = team_object.games[:home].map do |home_game|
+      home_game.team_ids[:away]
+    end
+    all_opp_team_ids_when_away = team_object.games[:away].map do |home_game|
+      home_game.team_ids[:home]
+    end
+    all_opp_team_ids = (all_opp_team_ids_when_home + all_opp_team_ids_when_away).uniq
     all_opp_team_ids
   end
 
@@ -114,15 +106,18 @@ module TeamStats
     home_wins = 0
     away_wins = 0
 
-    team.games.values.each do |game|
-      if game.team_ids[:away] == opp_id
+    team.games[:home].each do |home_game|
+      if home_game.team_ids[:away] == opp_id
         home_matches += 1
-        if game.home_win
+        if home_game.home_win
           home_wins += 1
         end
-      elsif game.team_ids[:home] == opp_id
+      end
+    end
+    team.games[:away].each do |away_game|
+      if away_game.team_ids[:home] == opp_id
         away_matches += 1
-        if !game.home_win
+        if !away_game.home_win
           away_wins += 1
         end
       end

@@ -27,7 +27,23 @@ class TeamTest < Minitest::Test
 
   def test_team_has_games
     assert_instance_of Hash, @team.games
-    assert_equal 27, @team.games[2012030312].shots[:home]
+    assert_equal 2, @team.games[:home].count
+    assert_equal 3, @team.games[:away].count
+    assert_instance_of Game, @team.games[:home][0]
+  end
+
+  def test_generate_home_and_away_games_returns_hash_of_home_vs_away_game_objects
+    game1 = mock("game1")
+    game1.stubs(:team_ids).returns({home: 5, away: 15})
+    game2 = mock("game2")
+    game2.stubs(:team_ids).returns({home: 5, away: 18})
+    game3 = mock("game3")
+    game3.stubs(:team_ids).returns({home: 28, away: 5})
+    games_hash = {2012030312 => game1, 2013051204 => game2, 2017041309 => game3}
+
+    expected = {home: [game1, game2], away: [game3]}
+
+    assert_equal expected, @team.generate_home_and_away_games(games_hash)
   end
 
   def test_home_win_count

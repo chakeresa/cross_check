@@ -5,67 +5,57 @@ module LeagueStats
 
   def best_offense
     best_offense_team = @teams.values.max_by do |team|
-      total_team_goals = team.games.values.sum do |game|
-        if game.team_ids[:home] == team.team_id
-          game.goals[:home]
-        else
-          game.goals[:away]
-        end
+      total_team_goals = team.games[:home].sum do |game|
+        game.goals[:home]
       end
-      total_team_games = team.games.values.count
-      total_team_goals.to_f / total_team_games
+      total_team_goals += team.games[:away].sum do |game|
+        game.goals[:away]
+      end
+      total_team_goals.to_f / team.total_game_count
     end
     best_offense_team.team_name
   end
 
   def worst_offense
     worst_offense_team = @teams.values.min_by do |team|
-      total_team_goals = team.games.values.sum do |game|
-        if game.team_ids[:home] == team.team_id
-          game.goals[:home]
-        else
-          game.goals[:away]
-        end
+      total_team_goals = team.games[:home].sum do |game|
+        game.goals[:home]
       end
-      total_team_games = team.games.values.count
-      total_team_goals.to_f / total_team_games
+      total_team_goals += team.games[:away].sum do |game|
+        game.goals[:away]
+      end
+      total_team_goals.to_f / team.total_game_count
     end
     worst_offense_team.team_name
   end
 
   def best_defense
     best_defense_team = @teams.values.min_by do |team|
-      total_opponent_goals = @games.values.sum do |game|
-        if game.team_ids[:away] == team.team_id
-          game.goals[:home]
-        elsif game.team_ids[:home] == team.team_id
-          game.goals[:away]
-        else
-          0
-        end
+      total_opponent_goals = team.games[:away].sum do |game|
+        game.goals[:home]
       end
-      total_team_games = team.games.values.count
-      total_opponent_goals.to_f / total_team_games
+      total_opponent_goals += team.games[:home].sum do |game|
+        game.goals[:away]
+      end
+      total_opponent_goals.to_f / team.total_game_count
     end
     best_defense_team.team_name
   end
 
   def worst_defense
     worst_defense_team = @teams.values.max_by do |team|
-      total_opponent_goals = @games.values.sum do |game|
-        if game.team_ids[:away] == team.team_id
-          game.goals[:home]
-        elsif game.team_ids[:home] == team.team_id
-          game.goals[:away]
-        else
-          0
-        end
+      total_opponent_goals = team.games[:away].sum do |game|
+        game.goals[:home]
       end
-      total_team_games = team.games.values.count
-      total_opponent_goals.to_f / total_team_games
+      total_opponent_goals += team.games[:home].sum do |game|
+        game.goals[:away]
+      end
+      total_opponent_goals.to_f / team.total_game_count
     end
     worst_defense_team.team_name
   end
+
+  # STOPPED HERE
 
   def highest_scoring_visitor
     total_games = Hash.new(0)
@@ -129,7 +119,7 @@ module LeagueStats
 
   def winningest_team
     winning_team = @teams.values.max_by do |team|
-      (team.home_win_count + team.away_win_count).to_f / team.games.count
+      (team.home_win_count + team.away_win_count).to_f / team.total_game_count
     end
     winning_team.team_name
   end
