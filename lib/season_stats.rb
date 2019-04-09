@@ -40,4 +40,11 @@ module SeasonStats
     max_hit_season.team_name
   end
 
+  def fewest_hits(season_id)
+    min_hit_season = all_season_objects(season_id).min_by do |season_object|
+      season_object.total_hits
+    end
+    min_hit_season.team_name
+  end
+
 end

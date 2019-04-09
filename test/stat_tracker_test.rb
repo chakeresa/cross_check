@@ -317,9 +317,8 @@ def test_most_hits_returns_name_of_team_w_most_hits_in_the_season
   assert_equal "Sharks", @med_stats.most_hits("20152016")
 end
 
-def test_least_hits_returns_name_of_team_w_fewest_hits_in_the_season
-  skip
-  assert_equal "Capitals", @med_stats.least_hits("20152016")
+def test_fewest_hits_returns_name_of_team_w_fewest_hits_in_the_season
+  assert_equal "Capitals", @med_stats.fewest_hits("20152016")
 end
 
 # power_play_goal_percentage	Percentage of goals that were power play goals for the season (rounded to the nearest 100th)	Float
