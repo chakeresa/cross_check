@@ -224,4 +224,75 @@ class StatTrackerTest < Minitest::Test
     }
     assert_equal expected, @med_stats.head_to_head("18")
   end
+
+  def test_seasonal_summary_returns_hash_that_has_two_keys_with_reg_and_post_season_stats_keys_with_values
+    skip
+    regular_season_hash2014 = {
+      win_percentage: 0.33,
+      total_goals_scored: 7,
+      total_goals_against: 2,
+      average_goals_scored: 2.33,
+      average_goals_against: 0.66
+    }
+    postseason_hash2014 = {
+      win_percentage: 0,
+      total_goals_scored: 0,
+      total_goals_against: 0,
+      average_goals_scored: 0,
+      average_goals_against: 0
+    }
+    regular_season_hash2015 = {
+      win_percentage: 1.0,
+      total_goals_scored: 6,
+      total_goals_against: 4,
+      average_goals_scored: 3,
+      average_goals_against: 2
+    }
+    postseason_hash2015 = {
+      win_percentage: 0.33,
+      total_goals_scored: 6,
+      total_goals_against: 9,
+      average_goals_scored: 2,
+      average_goals_against: 3
+    }
+    regular_season_hash2016 = {
+      win_percentage: 0.67,
+      total_goals_scored: 12,
+      total_goals_against: 14,
+      average_goals_scored: 4,
+      average_goals_against: 4.67
+    }
+    postseason_hash2016 = {
+      win_percentage: 0.67,
+      total_goals_scored: 10,
+      total_goals_against: 4,
+      average_goals_scored: 3.33,
+      average_goals_against: 1.33
+    }
+    regular_season_hash2017 = {
+      win_percentage: 0.5,
+      total_goals_scored: 8,
+      total_goals_against: 7,
+      average_goals_scored: 4,
+      average_goals_against: 3.5
+    }
+    postseason_hash2017 = {
+      win_percentage: 0,
+      total_goals_scored: 0,
+      total_goals_against: 0,
+      average_goals_scored: 0,
+      average_goals_against: 0
+    }
+    expected = {
+        "20142015" => { regular_season: regular_season2014,
+                        postseason: postseason2014},
+        "20152016" => { regular_season: regular_season2015,
+                        postseason: postseason2015},
+        "20162017" => { regular_season: regular_season2016,
+                        postseason: postseason2016},
+        "20172018" => { regular_season: regular_season2017,
+                        postseason: postseason2017}
+    }
+    assert_equal expected, @med_stats.seasonal_summary("5")
+  end
 end

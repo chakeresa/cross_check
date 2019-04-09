@@ -2,8 +2,6 @@ require_relative 'team'
 
 class Season
   def initialize(team_object, season_id)
-    # TO DO: OK to delete?
-    # @team_object = team_object
     @team_id = team_object.team_id
     @season_id = season_id.to_s
     @regular_seas_games = generate_regular_seas_games(team_object)
@@ -57,14 +55,26 @@ class Season
   # stuff for season summary:
   # :win_percentage, :total_goals_scored, :total_goals_against, :average_goals_scored, :average_goals_against
 
-  def win_percentage
-    home_wins = @all_games[:home].count do |home_game|
+  def reg_seas_win_percentage
+    home_wins = @regular_seas_games[:home].count do |home_game|
       home_game.home_win
     end
-    away_wins = @all_games[:away].count do |away_game|
+    away_wins = @regular_seas_games[:away].count do |away_game|
       !away_game.home_win
     end
-    ((home_wins.to_f + away_wins) / total_game_count).round(2)
+    game_count_for_calc = [total_game_count, 1].max
+    ((home_wins.to_f + away_wins) / game_count_for_calc).round(2)
+  end
+
+  def post_seas_win_percentage
+    home_wins = @post_seas_games[:home].count do |home_game|
+      home_game.home_win
+    end
+    away_wins = @post_seas_games[:away].count do |away_game|
+      !away_game.home_win
+    end
+    game_count_for_calc = [total_game_count, 1].max
+    ((home_wins.to_f + away_wins) / game_count_for_calc).round(2)
   end
 
   def total_game_count

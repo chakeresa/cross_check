@@ -31,8 +31,12 @@ class SeasonTest < Minitest::Test
     assert_equal 3, @season.generate_all_games[:away].count
   end
 
-  def test_win_percentage_returns_frac_of_games_won
-    assert_equal 0.67, @season.win_percentage
+  def test_reg_seas_win_percentage_returns_frac_of_games_won
+    assert_equal 0.67, @season.reg_seas_win_percentage
+  end
+
+  def test_post_seas_win_percentage_returns_frac_of_games_won
+    assert_equal 0.67, @season.reg_seas_win_percentage
   end
 
   def test_total_game_count_returns_integer
