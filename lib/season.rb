@@ -58,12 +58,18 @@ class Season
   # :win_percentage, :total_goals_scored, :total_goals_against, :average_goals_scored, :average_goals_against
 
   def win_percentage
-    home_wins = all_games[:home].count do |home_game|
+    home_wins = @all_games[:home].count do |home_game|
       home_game.home_win
     end
-    away_wins = all_games[:away].count do |away_game|
+    away_wins = @all_games[:away].count do |away_game|
       !away_game.home_win
     end
-    ((home_wins.to_f + away_wins) / @team_object.total_game_count).round(2)
+    ((home_wins.to_f + away_wins) / total_game_count).round(2)
+  end
+
+  def total_game_count
+    home_game_count = @all_games[:home].count
+    away_game_count = @all_games[:away].count
+    home_game_count + away_game_count
   end
 end
