@@ -39,16 +39,14 @@ class SeasonTest < Minitest::Test
     assert_equal 0.67, @season.post_seas_win_percentage
   end
 
-  def test_reg_seas_total_goals_scored_returns_integer
-    assert_equal 12, @season.reg_seas_total_goals_scored
+  def test_reg_seas_total_goals_returns_hash_of_goals_for_and_against
+    assert_equal 12, @season.reg_seas_total_goals[:scored]
+    assert_equal 14, @season.reg_seas_total_goals[:against]
   end
 
   def test_post_seas_total_goals_scored_returns_integer
-    assert_equal 10, @season.post_seas_total_goals_scored
-  end
-
-  def test_reg_seas_total_goals_against_returns_integer
-    assert_equal 14, @season.reg_seas_total_goals_against
+    assert_equal 10, @season.post_seas_total_goals[:scored]
+    assert_equal 4, @season.post_seas_total_goals[:against]
   end
 
   def test_total_game_count_returns_integer

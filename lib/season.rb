@@ -79,44 +79,32 @@ class Season
     ((home_wins.to_f + away_wins) / game_count_for_calc).round(2)
   end
 
-  def reg_seas_total_goals_scored
-    total_goals = @regular_seas_games[:home].sum do |home_game|
-      home_game.goals[:home]
+  def reg_seas_total_goals
+    total_goals_scored = 0
+    total_goals_against = 0
+    @regular_seas_games[:home].each do |home_game|
+      total_goals_scored += home_game.goals[:home]
+      total_goals_against += home_game.goals[:away]
     end
-    total_goals += @regular_seas_games[:away].sum do |away_game|
-      away_game.goals[:away]
+    @regular_seas_games[:away].each do |away_game|
+      total_goals_scored += away_game.goals[:away]
+      total_goals_against += away_game.goals[:home]
     end
-    total_goals
+    hash = {scored: total_goals_scored, against: total_goals_against}
   end
 
-  def post_seas_total_goals_scored
-    total_goals = @post_seas_games[:home].sum do |home_game|
-      home_game.goals[:home]
+  def post_seas_total_goals
+    total_goals_scored = 0
+    total_goals_against = 0
+    @post_seas_games[:home].each do |home_game|
+      total_goals_scored += home_game.goals[:home]
+      total_goals_against += home_game.goals[:away]
     end
-    total_goals += @post_seas_games[:away].sum do |away_game|
-      away_game.goals[:away]
+    @post_seas_games[:away].each do |away_game|
+      total_goals_scored += away_game.goals[:away]
+      total_goals_against += away_game.goals[:home]
     end
-    total_goals
-  end
-
-  def reg_seas_total_goals_against
-    total_goals = @regular_seas_games[:home].sum do |home_game|
-      home_game.goals[:away]
-    end
-    total_goals += @regular_seas_games[:away].sum do |away_game|
-      away_game.goals[:home]
-    end
-    total_goals
-  end
-
-  def post_seas_total_goals_against
-    total_goals = @post_seas_games[:home].sum do |home_game|
-      home_game.goals[:away]
-    end
-    total_goals += @post_seas_games[:away].sum do |away_game|
-      away_game.goals[:home]
-    end
-    total_goals
+    hash = {scored: total_goals_scored, against: total_goals_against}
   end
 
   def total_game_count
