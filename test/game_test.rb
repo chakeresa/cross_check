@@ -22,8 +22,15 @@ class GameTest < Minitest::Test
     assert_equal "P", @game.type
     assert_equal ({home: 6, away: 3}), @game.team_ids
     assert_equal ({home: 3, away: 2}), @game.goals
+    assert_equal ({home: 3, away: 2}), @game.goals_wo_shootout
     assert_equal true, @game.home_win
     assert_equal "OT", @game.settled_in
+  end
+
+  def test_goals_without_shootout_attribute
+    game_1 = @game_stats[2013020937]
+    assert_equal ({home: 3, away: 3}), game_1.goals_wo_shootout
+    assert_equal ({home: 3, away: 4}), game_1.goals
   end
 
   def test_total_goals_sums_home_and_away_goals
