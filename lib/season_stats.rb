@@ -47,4 +47,8 @@ module SeasonStats
     min_hit_season.team_name
   end
 
+  def power_play_goal_percentage(season_id)
+    # TO DO
+  end
+
 end

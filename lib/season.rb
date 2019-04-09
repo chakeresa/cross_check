@@ -163,4 +163,14 @@ class Season
     end
     total_hits_count
   end
+
+  def total_power_play_goals
+    total_pp_goals_count = @all_games[:home].sum do |home_game|
+      home_game.power_play_goals[:home]
+    end
+    total_pp_goals_count += @all_games[:away].sum do |away_game|
+      away_game.power_play_goals[:away]
+    end
+    total_pp_goals_count
+  end
 end
