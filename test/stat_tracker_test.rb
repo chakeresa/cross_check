@@ -321,11 +321,8 @@ def test_fewest_hits_returns_name_of_team_w_fewest_hits_in_the_season
   assert_equal "Capitals", @med_stats.fewest_hits("20152016")
 end
 
-# power_play_goal_percentage	Percentage of goals that were power play goals for the season (rounded to the nearest 100th)	Float
-
 def test_power_play_goal_percentage_returns_percent_of_goals_that_were_power_play_goals_in_the_season
   assert_equal 0.16, @med_stats.power_play_goal_percentage("20152016")
-  # total power play goals from all teams combined / total goals from all teams combined
 end
 
 end

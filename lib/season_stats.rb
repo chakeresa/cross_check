@@ -48,7 +48,16 @@ module SeasonStats
   end
 
   def power_play_goal_percentage(season_id)
-    # TO DO
+    all_power_play_goals = all_season_objects(season_id).sum do |season_object|
+      season_object.total_power_play_goals
+    end
+    all_reg_seas_goals = all_season_objects(season_id).sum do |season_object|
+      season_object.reg_seas_total_goals[:scored]
+    end
+    all_post_seas_goals = all_season_objects(season_id).sum do |season_object|
+      season_object.post_seas_total_goals[:scored]
+    end
+    (all_power_play_goals.to_f / (all_reg_seas_goals + all_post_seas_goals)).round(2)
   end
 
 end
