@@ -4,6 +4,7 @@ class Game
               :type,
               :team_ids,
               :goals,
+              :goals_wo_shootout,
               :home_win,
               :settled_in,
               :shots,
@@ -21,6 +22,7 @@ class Game
     @type = game_info[:type]
     @team_ids = {home: game_info[:home_team_id], away: game_info[:away_team_id]}
     @goals = {home: game_info[:home_goals], away: game_info[:away_goals]}
+    @goals_wo_shootout = {home: relevant_game_team_stats[:home][:goals], away: relevant_game_team_stats[:away][:goals]}
     @home_win = game_info[:outcome].split[0] == "home"
     @settled_in = game_info[:outcome].split[2]
     @coaches = {home: relevant_game_team_stats[:home][:head_coach], away: relevant_game_team_stats[:away][:head_coach]}

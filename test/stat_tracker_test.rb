@@ -294,4 +294,27 @@ class StatTrackerTest < Minitest::Test
     }
     assert_equal expected, @med_stats.seasonal_summary("5")
   end
+
+  def test_biggest_bust_returns_team_name_with_biggest_decrease_between_reg_and_post_season_win_pct
+    assert_equal "Penguins", @med_stats.biggest_bust("20152016")
+  end
+
+  def test_biggest_surprise_returns_team_name_with_biggest_increase_between_reg_and_post_season_win_pct
+    assert_equal "Predators", @med_stats.biggest_surprise("20152016")
+  end
+
+# winningest_coach	Name of the Coach with the best win percentage for the season	String
+
+# worst_coach	Name of the Coach with the worst win percentage for the season	String
+
+# most_accurate_team	Name of the Team with the best ratio of shots to goals for the season	String
+
+# least_accurate_team	Name of the Team with the worst ratio of shots to goals for the season	String
+
+# most_hits	Name of the Team with the most hits in the season	String
+
+# fewest_hits	Name of the Team with the fewest hits in the season	String
+
+# power_play_goal_percentage	Percentage of goals that were power play goals for the season (rounded to the nearest 100th)	Float
+
 end
