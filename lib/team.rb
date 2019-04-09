@@ -15,6 +15,7 @@ class Team
     @abbreviation = team_hash[:abbreviation]
     @link = team_hash[:link]
     @games = generate_home_and_away_games(games_hash)
+    @games_by_season = generate_games_by_season
   end
 
   def generate_home_and_away_games(games_hash)
@@ -28,6 +29,17 @@ class Team
       end
     end
     {home: home_games, away: away_games}
+  end
+
+  def generate_games_by_season
+
+  end
+
+  def all_season_ids
+    all_games_for_team = @games[:home] + @games[:away]
+    all_seas_ids = all_games_for_team.map do |game|
+      game.season
+    end.uniq
   end
 
   def home_win_count

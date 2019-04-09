@@ -37,10 +37,7 @@ module TeamStats
 
   def all_season_ids(team_id)
     team_object = @teams[team_id.to_i]
-    all_games_for_team = team_object.games[:home] + team_object.games[:away]
-    all_seas_ids = all_games_for_team.map do |game|
-      game.season
-    end.uniq
+    team_object.all_season_ids
   end
 
   def best_season(team_id)
