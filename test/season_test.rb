@@ -39,6 +39,10 @@ class SeasonTest < Minitest::Test
     assert_equal 0.67, @season.post_seas_win_percentage
   end
 
+  def test_post_seas_total_goals_scored_returns_integer
+    assert_equal 10, @season.post_seas_total_goals_scored
+  end
+
   def test_total_game_count_returns_integer
     assert_equal 6, @season.total_game_count
   end

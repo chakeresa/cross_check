@@ -79,6 +79,16 @@ class Season
     ((home_wins.to_f + away_wins) / game_count_for_calc).round(2)
   end
 
+  def post_seas_total_goals_scored
+    total_goals = @post_seas_games[:home].sum do |home_game|
+      home_game.goals[:home]
+    end
+    total_goals += @post_seas_games[:away].sum do |away_game|
+      away_game.goals[:away]
+    end
+    total_goals
+  end
+
   def total_game_count
     home_game_count = @all_games[:home].count
     away_game_count = @all_games[:away].count
