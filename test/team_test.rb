@@ -47,8 +47,8 @@ class TeamTest < Minitest::Test
   end
 
   def test_generate_season_hash_returns_hash_with_season_id_keys_and_season_object_values
-    assert_equal 4, @team.generate_seasons_hash.count
-    assert_equal 4, @team.seasons_hash.count
+    assert_equal 2, @team.generate_seasons_hash.count
+    assert_equal 2, @team.seasons_hash.count
   end
 
   def test_home_win_count
