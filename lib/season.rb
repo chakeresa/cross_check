@@ -120,4 +120,16 @@ class Season
   def total_game_count
     total_regular_game_count + total_post_game_count
   end
+
+  def reg_seas_avg_goals_per_game
+    avg_goals_scored = (reg_seas_total_goals[:scored].to_f / total_regular_game_count).round(2)
+    avg_goals_against = (reg_seas_total_goals[:against].to_f / total_regular_game_count).round(2)
+    hash = {scored: avg_goals_scored, against: avg_goals_against}
+  end
+
+  def post_seas_avg_goals_per_game
+    avg_goals_scored = (post_seas_total_goals[:scored].to_f / total_post_game_count).round(2)
+    avg_goals_against = (post_seas_total_goals[:against].to_f / total_post_game_count).round(2)
+    hash = {scored: avg_goals_scored, against: avg_goals_against}
+  end
 end

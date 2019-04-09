@@ -54,4 +54,14 @@ class SeasonTest < Minitest::Test
     assert_equal 3, @season.total_post_game_count
     assert_equal 6, @season.total_game_count
   end
+
+  def test_reg_seas_avg_goals_per_game_returns_hash_for_scored_and_against
+    assert_equal 4.0, @season.reg_seas_avg_goals_per_game[:scored]
+    assert_equal 4.67, @season.reg_seas_avg_goals_per_game[:against]
+  end
+
+  def test_post_seas_avg_goals_per_game_returns_hash_for_scored_and_against
+    assert_equal 3.33, @season.post_seas_avg_goals_per_game[:scored]
+    assert_equal 1.33, @season.post_seas_avg_goals_per_game[:against]
+  end
 end
