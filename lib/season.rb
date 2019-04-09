@@ -54,9 +54,6 @@ class Season
     all_games_hash
   end
 
-  # stuff for season summary:
-  # :win_percentage, :total_goals_scored, :total_goals_against, :average_goals_scored, :average_goals_against
-
   def reg_seas_win_percentage
     home_wins = @regular_seas_games[:home].count do |home_game|
       home_game.home_win
@@ -123,7 +120,6 @@ class Season
     total_regular_game_count + total_post_game_count
   end
 
-# TO DO: don't divide by zero
   def reg_seas_avg_goals_per_game
     avg_goals_scored = (reg_seas_total_goals[:scored].to_f / total_regular_game_count).round(2)
     avg_goals_against = (reg_seas_total_goals[:against].to_f / total_regular_game_count).round(2)
