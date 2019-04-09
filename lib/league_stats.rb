@@ -55,8 +55,6 @@ module LeagueStats
     worst_defense_team.team_name
   end
 
-  # STOPPED HERE
-
   def highest_scoring_visitor
     total_games = Hash.new(0)
     total_away_goals_by_team_ids = Hash.new(0)
@@ -143,6 +141,6 @@ module LeagueStats
     worst_fans_teams.map do |team|
       team.team_name
     end
-    # TO DO: consider combining these 2 enums by using inject
   end
+  
 end
