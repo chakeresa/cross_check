@@ -84,4 +84,8 @@ class SeasonTest < Minitest::Test
 
     assert_equal expected, @season.summary
   end
+
+  def test_most_hits_returns_max_number_of_hits_in_season
+    assert_equal 37, @season.most_hits
+  end
 end

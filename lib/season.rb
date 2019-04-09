@@ -1,10 +1,11 @@
 require_relative 'team'
 
 class Season
-  attr_reader :season_id
+  attr_reader :team_id, :team_name, :season_id
 
   def initialize(team_object, season_id)
     @team_id = team_object.team_id
+    @team_name = team_object.team_name
     @season_id = season_id.to_s
     @regular_seas_games = generate_regular_seas_games(team_object)
     @post_seas_games = generate_post_seas_games(team_object)
@@ -149,5 +150,17 @@ class Season
       average_goals_against: post_seas_avg_goals_per_game[:against]
     }
     hash = {regular_season: regular_season_hash, postseason: post_season_hash}
+  end
+
+  def most_hits
+    max_hits_home_game = @all_games[:home].max do |home_game|
+      home_game.hits[:home]
+    end
+    max_hits_in_home_games = max_hits_home_game.hits[:home]
+    max_hits_away_game = @all_games[:away].max do |away_game|
+      away_game.hits[:away]
+    end
+    max_hits_in_away_games = max_hits_away_game.hits[:away]
+    [max_hits_in_home_games, max_hits_in_away_games].max
   end
 end

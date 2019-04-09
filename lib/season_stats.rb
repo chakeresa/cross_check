@@ -24,4 +24,20 @@ module SeasonStats
     end.team_name
   end
 
+  def all_season_objects(season_id)
+    team_objects = @teams.values.find_all do |team_object|
+      team_object.seasons_hash.keys.include?(season_id)
+    end
+    team_objects.map do |team_object|
+      team_object.seasons_hash[season_id]
+    end
+  end
+
+  def most_hits(season_id)
+    max_hit_season = all_season_objects(season_id).max_by do |season_object|
+      # TO DO
+    end
+    max_hit_team = max_hit_season.team_id
+  end
+
 end
