@@ -203,6 +203,19 @@ class StatTrackerTest < Minitest::Test
     assert_equal 0.25, @med_stats.win_percentage_for_opponent(predators, 5)
   end
 
+  def test_team_and_opp_goal_difference_return_array_of_game_goal_differences
+    expected = [-3, 1, 1, 3, -2, 6, -2, 1, -2, 2, 3, 1, -4, -1, -1, 2]
+    assert_equal expected, @med_stats.team_and_opp_goal_difference("5")
+  end
+
+  def test_biggest_team_blowout_returns_biggest_difference_between_team_goals_minus_opponent_goals
+    assert_equal 6, @med_stats.biggest_team_blowout("5")
+  end
+
+  def test_worst_loss_returns_biggest_difference_between_opponent_goals_minus_team_goals
+    assert_equal 4, @med_stats.worst_loss("5")
+  end
+
   def test_head_to_head_returns_a_hash_with_opponent_name_as_key_and_win_pc_as_value
     expected = {
         "Penguins" => 0.25,
@@ -210,5 +223,75 @@ class StatTrackerTest < Minitest::Test
         "Sharks" => 0.38
     }
     assert_equal expected, @med_stats.head_to_head("18")
+  end
+
+  def test_seasonal_summary_returns_hash_that_has_two_keys_with_reg_and_post_season_stats_keys_with_values
+    regular_season_hash2014 = {
+      win_percentage: 0.33,
+      total_goals_scored: 4,
+      total_goals_against: 5,
+      average_goals_scored: 1.33,
+      average_goals_against: 1.67
+    }
+    postseason_hash2014 = {
+      win_percentage: 0,
+      total_goals_scored: 0,
+      total_goals_against: 0,
+      average_goals_scored: 0,
+      average_goals_against: 0
+    }
+    regular_season_hash2015 = {
+      win_percentage: 1.0,
+      total_goals_scored: 6,
+      total_goals_against: 4,
+      average_goals_scored: 3,
+      average_goals_against: 2
+    }
+    postseason_hash2015 = {
+      win_percentage: 0.33,
+      total_goals_scored: 7,
+      total_goals_against: 8,
+      average_goals_scored: 2.33,
+      average_goals_against: 2.67
+    }
+    regular_season_hash2016 = {
+      win_percentage: 0.67,
+      total_goals_scored: 12,
+      total_goals_against: 14,
+      average_goals_scored: 4,
+      average_goals_against: 4.67
+    }
+    postseason_hash2016 = {
+      win_percentage: 0.67,
+      total_goals_scored: 10,
+      total_goals_against: 4,
+      average_goals_scored: 3.33,
+      average_goals_against: 1.33
+    }
+    regular_season_hash2017 = {
+      win_percentage: 0.5,
+      total_goals_scored: 8,
+      total_goals_against: 7,
+      average_goals_scored: 4,
+      average_goals_against: 3.5
+    }
+    postseason_hash2017 = {
+      win_percentage: 0,
+      total_goals_scored: 0,
+      total_goals_against: 0,
+      average_goals_scored: 0,
+      average_goals_against: 0
+    }
+    expected = {
+        "20142015" => { regular_season: regular_season_hash2014,
+                        postseason: postseason_hash2014},
+        "20152016" => { regular_season: regular_season_hash2015,
+                        postseason: postseason_hash2015},
+        "20162017" => { regular_season: regular_season_hash2016,
+                        postseason: postseason_hash2016},
+        "20172018" => { regular_season: regular_season_hash2017,
+                        postseason: postseason_hash2017}
+    }
+    assert_equal expected, @med_stats.seasonal_summary("5")
   end
 end

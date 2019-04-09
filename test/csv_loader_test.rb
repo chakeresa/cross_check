@@ -79,7 +79,7 @@ class CsvLoaderTest < Minitest::Test
     assert_equal 4, team_hash_1.count
     assert_instance_of Team, single_team
     assert_equal 34, single_team.franchise_id
-    assert_equal 16, single_team.games.count
+    assert_equal 16, single_team.total_game_count
 
     team_hash_attr = @med_stats.team_hash
     single_team_from_attr = team_hash_attr[18]
@@ -88,6 +88,6 @@ class CsvLoaderTest < Minitest::Test
     assert_equal 4, team_hash_attr.count
     assert_instance_of Team, single_team_from_attr
     assert_equal 34, single_team_from_attr.franchise_id
-    assert_equal 16, single_team_from_attr.games.count
+    assert_equal 16, single_team_from_attr.total_game_count
   end
 end
