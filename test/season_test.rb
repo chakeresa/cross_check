@@ -9,7 +9,7 @@ class SeasonTest < Minitest::Test
     }
     @stats = StatTracker.from_csv(@locations)
     @team = @stats.teams[5]
-    @season = Season.new(@team, 20152016)
+    @season = Season.new(@team, 20162017)
   end
 
   def test_it_exists
@@ -17,8 +17,8 @@ class SeasonTest < Minitest::Test
   end
 
   def test_generate_regular_seas_games_returns_hash_w_home_and_away_game_objects
-    assert_equal 0, @season.generate_regular_seas_games[:home].count
-    assert_equal 2, @season.generate_regular_seas_games[:away].count
+    assert_equal 2, @season.generate_regular_seas_games[:home].count
+    assert_equal 1, @season.generate_regular_seas_games[:away].count
   end
 
   def test_generate_post_seas_games_returns_hash_w_home_and_away_game_objects
