@@ -62,8 +62,7 @@ class Season
     away_wins = @regular_seas_games[:away].count do |away_game|
       !away_game.home_win
     end
-    reg_seas_game_ct = @regular_seas_games[:home].count + @regular_seas_games[:away].count
-    game_count_for_calc = [reg_seas_game_ct, 1].max
+    game_count_for_calc = [total_regular_game_count, 1].max
     ((home_wins.to_f + away_wins) / game_count_for_calc).round(2)
   end
 
@@ -74,8 +73,7 @@ class Season
     away_wins = @post_seas_games[:away].count do |away_game|
       !away_game.home_win
     end
-    post_seas_game_ct = @post_seas_games[:home].count + @post_seas_games[:away].count
-    game_count_for_calc = [post_seas_game_ct, 1].max
+    game_count_for_calc = [total_post_game_count, 1].max
     ((home_wins.to_f + away_wins) / game_count_for_calc).round(2)
   end
 
@@ -107,9 +105,19 @@ class Season
     hash = {scored: total_goals_scored, against: total_goals_against}
   end
 
-  def total_game_count
-    home_game_count = @all_games[:home].count
-    away_game_count = @all_games[:away].count
+  def total_regular_game_count
+    home_game_count = @regular_seas_games[:home].count
+    away_game_count = @regular_seas_games[:away].count
     home_game_count + away_game_count
+  end
+
+  def total_post_game_count
+    home_game_count = @post_seas_games[:home].count
+    away_game_count = @post_seas_games[:away].count
+    home_game_count + away_game_count
+  end
+
+  def total_game_count
+    total_regular_game_count + total_post_game_count
   end
 end
