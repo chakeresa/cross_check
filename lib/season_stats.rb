@@ -17,4 +17,11 @@ module SeasonStats
     end.team_name
   end
 
+  def biggest_surprise(season_id)
+    all_teams_in_post_season(season_id).min_by do |team_object|
+      season_object = team_object.seasons_hash[season_id]
+      season_object.reg_seas_win_percentage - season_object.post_seas_win_percentage
+    end.team_name
+  end
+
 end
