@@ -226,13 +226,12 @@ class StatTrackerTest < Minitest::Test
   end
 
   def test_seasonal_summary_returns_hash_that_has_two_keys_with_reg_and_post_season_stats_keys_with_values
-    skip
     regular_season_hash2014 = {
       win_percentage: 0.33,
-      total_goals_scored: 7,
-      total_goals_against: 2,
-      average_goals_scored: 2.33,
-      average_goals_against: 0.66
+      total_goals_scored: 4,
+      total_goals_against: 5,
+      average_goals_scored: 1.33,
+      average_goals_against: 1.67
     }
     postseason_hash2014 = {
       win_percentage: 0,
@@ -250,10 +249,10 @@ class StatTrackerTest < Minitest::Test
     }
     postseason_hash2015 = {
       win_percentage: 0.33,
-      total_goals_scored: 6,
-      total_goals_against: 9,
-      average_goals_scored: 2,
-      average_goals_against: 3
+      total_goals_scored: 7,
+      total_goals_against: 8,
+      average_goals_scored: 2.33,
+      average_goals_against: 2.67
     }
     regular_season_hash2016 = {
       win_percentage: 0.67,

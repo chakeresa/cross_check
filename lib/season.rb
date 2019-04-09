@@ -1,6 +1,8 @@
 require_relative 'team'
 
 class Season
+  attr_reader :season_id
+
   def initialize(team_object, season_id)
     @team_id = team_object.team_id
     @season_id = season_id.to_s
@@ -121,6 +123,7 @@ class Season
     total_regular_game_count + total_post_game_count
   end
 
+# TO DO: don't divide by zero
   def reg_seas_avg_goals_per_game
     avg_goals_scored = (reg_seas_total_goals[:scored].to_f / total_regular_game_count).round(2)
     avg_goals_against = (reg_seas_total_goals[:against].to_f / total_regular_game_count).round(2)
@@ -128,8 +131,9 @@ class Season
   end
 
   def post_seas_avg_goals_per_game
-    avg_goals_scored = (post_seas_total_goals[:scored].to_f / total_post_game_count).round(2)
-    avg_goals_against = (post_seas_total_goals[:against].to_f / total_post_game_count).round(2)
+    game_count_for_calc = [total_post_game_count, 1].max
+    avg_goals_scored = (post_seas_total_goals[:scored].to_f / game_count_for_calc).round(2)
+    avg_goals_against = (post_seas_total_goals[:against].to_f / game_count_for_calc).round(2)
     hash = {scored: avg_goals_scored, against: avg_goals_against}
   end
 

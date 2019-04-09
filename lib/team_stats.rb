@@ -160,8 +160,12 @@ module TeamStats
     hash
   end
 
-  # def seasonal_summary
-  #
-  # end
+  def seasonal_summary(team_id)
+    team_object = @teams[team_id.to_i]
+    team_object.seasons_hash.values.inject({}) do |accum, season_object|
+      accum[season_object.season_id] = season_object.summary
+      accum
+    end
+  end
 
 end
