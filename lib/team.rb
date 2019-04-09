@@ -5,7 +5,8 @@ class Team
               :team_name,
               :abbreviation,
               :link,
-              :games
+              :games,
+              :seasons_hash
 
   def initialize(team_hash, games_hash)
     @team_id = team_hash[:team_id]
@@ -15,7 +16,7 @@ class Team
     @abbreviation = team_hash[:abbreviation]
     @link = team_hash[:link]
     @games = generate_home_and_away_games(games_hash)
-    @games_by_season = generate_games_by_season
+    @seasons_hash = generate_seasons_hash
   end
 
   def generate_home_and_away_games(games_hash)
@@ -31,8 +32,11 @@ class Team
     {home: home_games, away: away_games}
   end
 
-  def generate_games_by_season
-
+  def generate_seasons_hash
+    all_season_ids.inject({}) do |new_hash, season_id|
+      new_hash[season_id] = Season.new(self, season_id)
+      new_hash
+    end
   end
 
   def all_season_ids
