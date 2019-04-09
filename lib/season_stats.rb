@@ -35,9 +35,9 @@ module SeasonStats
 
   def most_hits(season_id)
     max_hit_season = all_season_objects(season_id).max_by do |season_object|
-      # TO DO
+      season_object.total_hits
     end
-    max_hit_team = max_hit_season.team_id
+    max_hit_season.team_name
   end
 
 end

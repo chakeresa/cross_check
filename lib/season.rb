@@ -152,15 +152,13 @@ class Season
     hash = {regular_season: regular_season_hash, postseason: post_season_hash}
   end
 
-  def most_hits
-    max_hits_home_game = @all_games[:home].max do |home_game|
+  def total_hits
+    total_hits_count = @all_games[:home].sum do |home_game|
       home_game.hits[:home]
     end
-    max_hits_in_home_games = max_hits_home_game.hits[:home]
-    max_hits_away_game = @all_games[:away].max do |away_game|
+    total_hits_count += @all_games[:away].sum do |away_game|
       away_game.hits[:away]
     end
-    max_hits_in_away_games = max_hits_away_game.hits[:away]
-    [max_hits_in_home_games, max_hits_in_away_games].max
+    total_hits_count
   end
 end

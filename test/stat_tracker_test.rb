@@ -314,7 +314,6 @@ class StatTrackerTest < Minitest::Test
 # least_accurate_team	Name of the Team with the worst ratio of shots to goals for the season	String
 
 def test_most_hits_returns_name_of_team_w_most_hits_in_the_season
-  skip
   assert_equal "Sharks", @med_stats.most_hits("20152016")
 end
 
