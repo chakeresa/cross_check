@@ -47,6 +47,10 @@ class SeasonTest < Minitest::Test
     assert_equal 10, @season.post_seas_total_goals_scored
   end
 
+  def test_reg_seas_total_goals_against_returns_integer
+    assert_equal 14, @season.reg_seas_total_goals_against
+  end
+
   def test_total_game_count_returns_integer
     assert_equal 6, @season.total_game_count
   end
