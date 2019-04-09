@@ -62,7 +62,8 @@ class Season
     away_wins = @regular_seas_games[:away].count do |away_game|
       !away_game.home_win
     end
-    game_count_for_calc = [total_game_count, 1].max
+    reg_seas_game_ct = @regular_seas_games[:home].count + @regular_seas_games[:away].count
+    game_count_for_calc = [reg_seas_game_ct, 1].max
     ((home_wins.to_f + away_wins) / game_count_for_calc).round(2)
   end
 
@@ -73,7 +74,8 @@ class Season
     away_wins = @post_seas_games[:away].count do |away_game|
       !away_game.home_win
     end
-    game_count_for_calc = [total_game_count, 1].max
+    post_seas_game_ct = @post_seas_games[:home].count + @post_seas_games[:away].count
+    game_count_for_calc = [post_seas_game_ct, 1].max
     ((home_wins.to_f + away_wins) / game_count_for_calc).round(2)
   end
 
