@@ -284,14 +284,14 @@ class StatTrackerTest < Minitest::Test
       average_goals_against: 0
     }
     expected = {
-        "20142015" => { regular_season: regular_season2014,
-                        postseason: postseason2014},
-        "20152016" => { regular_season: regular_season2015,
-                        postseason: postseason2015},
-        "20162017" => { regular_season: regular_season2016,
-                        postseason: postseason2016},
-        "20172018" => { regular_season: regular_season2017,
-                        postseason: postseason2017}
+        "20142015" => { regular_season: regular_season_hash2014,
+                        postseason: postseason_hash2014},
+        "20152016" => { regular_season: regular_season_hash2015,
+                        postseason: postseason_hash2015},
+        "20162017" => { regular_season: regular_season_hash2016,
+                        postseason: postseason_hash2016},
+        "20172018" => { regular_season: regular_season_hash2017,
+                        postseason: postseason_hash2017}
     }
     assert_equal expected, @med_stats.seasonal_summary("5")
   end

@@ -64,4 +64,24 @@ class SeasonTest < Minitest::Test
     assert_equal 3.33, @season.post_seas_avg_goals_per_game[:scored]
     assert_equal 1.33, @season.post_seas_avg_goals_per_game[:against]
   end
+
+  def test_summary_returns_superhash
+    regular_season_hash2016 = {
+      win_percentage: 0.67,
+      total_goals_scored: 12,
+      total_goals_against: 14,
+      average_goals_scored: 4,
+      average_goals_against: 4.67
+    }
+    postseason_hash2016 = {
+      win_percentage: 0.67,
+      total_goals_scored: 10,
+      total_goals_against: 4,
+      average_goals_scored: 3.33,
+      average_goals_against: 1.33
+    }
+    expected = {regular_season: regular_season_hash2016, postseason: postseason_hash2016}
+
+    assert_equal expected, @season.summary
+  end
 end

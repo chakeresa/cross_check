@@ -159,5 +159,9 @@ module TeamStats
     end
     hash
   end
-  
+
+  # def seasonal_summary
+  #
+  # end
+
 end
