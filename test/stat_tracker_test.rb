@@ -203,6 +203,19 @@ class StatTrackerTest < Minitest::Test
     assert_equal 0.25, @med_stats.win_percentage_for_opponent(predators, 5)
   end
 
+  def test_team_and_opp_goal_difference_return_array_of_game_goal_differences
+    expected = [-3, 1, 1, 3, -2, 6, -2, 1, -2, 2, 3, 1, -4, -1, -1, 2]
+    assert_equal expected, @med_stats.team_and_opp_goal_difference("5")
+  end
+
+  def test_biggest_team_blowout_returns_biggest_difference_between_team_goals_minus_opponent_goals
+    assert_equal 6, @med_stats.biggest_team_blowout("5")
+  end
+
+  def test_worst_loss_returns_biggest_difference_between_opponent_goals_minus_team_goals
+    assert_equal 4, @med_stats.worst_loss("5")
+  end
+
   def test_head_to_head_returns_a_hash_with_opponent_name_as_key_and_win_pc_as_value
     expected = {
         "Penguins" => 0.25,

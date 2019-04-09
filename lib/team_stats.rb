@@ -133,6 +133,25 @@ module TeamStats
     head_to_head(team_id).min_by { |team_name, win_pct| win_pct }.first
   end
 
+  def team_and_opp_goal_difference(team_id)
+    team_object = @teams[team_id.to_i]
+    home_goal_difference = team_object.games[:home].map do |home_game|
+      home_game.goals[:home] - home_game.goals[:away]
+    end
+    away_goal_difference = team_object.games[:away].map do |away_game|
+      away_game.goals[:away] - away_game.goals[:home]
+    end
+    home_goal_difference + away_goal_difference
+  end
+
+  def biggest_team_blowout(team_id)
+    team_and_opp_goal_difference(team_id).max
+  end
+
+  def worst_loss(team_id)
+    team_and_opp_goal_difference(team_id).min.abs
+  end
+
   def head_to_head(team_id)
     team_object = @teams[team_id.to_i]
     all_opp_team_ids = all_opponent_team_ids(team_id)
