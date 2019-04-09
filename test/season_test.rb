@@ -17,12 +17,17 @@ class SeasonTest < Minitest::Test
   end
 
   def test_generate_regular_seas_games_returns_hash_w_home_and_away_game_objects
-    assert_equal 2, @season.generate_regular_seas_games[:home].count
-    assert_equal 1, @season.generate_regular_seas_games[:away].count
+    assert_equal 2, @season.generate_regular_seas_games(@team)[:home].count
+    assert_equal 1, @season.generate_regular_seas_games(@team)[:away].count
   end
 
   def test_generate_post_seas_games_returns_hash_w_home_and_away_game_objects
-    assert_equal 1, @season.generate_post_seas_games[:home].count
-    assert_equal 2, @season.generate_post_seas_games[:away].count
+    assert_equal 1, @season.generate_post_seas_games(@team)[:home].count
+    assert_equal 2, @season.generate_post_seas_games(@team)[:away].count
+  end
+
+  def test_generate_all_games_returns_hash_w_home_and_away_game_objects
+    assert_equal 3, @season.generate_all_games[:home].count
+    assert_equal 3, @season.generate_all_games[:away].count
   end
 end
