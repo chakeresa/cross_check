@@ -85,22 +85,15 @@ class Season
     reg_home_goals_against = @regular_seas_games[:home].sum {|home_game| home_game.goals[:away]}
     reg_away_goals_scored = @regular_seas_games[:away].sum {|away_game| away_game.goals[:away]}
     reg_away_goals_against = @regular_seas_games[:away].sum {|away_game| away_game.goals[:home]}
-
     {scored: reg_home_goals_scored + reg_away_goals_scored, against: reg_home_goals_against + reg_away_goals_against}
   end
 
   def post_seas_total_goals
-    total_goals_scored = 0
-    total_goals_against = 0
-    @post_seas_games[:home].each do |home_game|
-      total_goals_scored += home_game.goals[:home]
-      total_goals_against += home_game.goals[:away]
-    end
-    @post_seas_games[:away].each do |away_game|
-      total_goals_scored += away_game.goals[:away]
-      total_goals_against += away_game.goals[:home]
-    end
-    hash = {scored: total_goals_scored, against: total_goals_against}
+    post_home_goals_scored = @post_seas_games[:home].sum {|home_game| home_game.goals[:home]}
+    post_home_goals_against = @post_seas_games[:home].sum {|home_game| home_game.goals[:away]}
+    post_away_goals_scored = @post_seas_games[:away].sum {|away_game| away_game.goals[:away]}
+    post_away_goals_against = @post_seas_games[:away].sum {|away_game| away_game.goals[:home]}
+    {scored: post_home_goals_scored + post_away_goals_scored, against: post_home_goals_against + post_away_goals_against}
   end
 
   def total_regular_game_count
