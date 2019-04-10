@@ -73,6 +73,43 @@ module SeasonStats
   def worst_coach(season_id)
     hash = coach_winning_percentages(season_id)
     hash.each {|coach, pct| return coach if pct == hash.values.min}
+
+  def most_accurate_team(season_id)
+    most_accurate = all_season_objects(season_id).max_by do |season_object|
+      season_object.goals_per_shots_ratio
+    end
+    most_accurate.team_name
+  end
+
+  def least_accurate_team(season_id)
+    least_accurate = all_season_objects(season_id).min_by do |season_object|
+      season_object.goals_per_shots_ratio
+    end
+    least_accurate.team_name
+  end
+  
+  def most_hits(season_id)
+    max_hit_season = all_season_objects(season_id).max_by do |season_object|
+      season_object.total_hits
+    end
+    max_hit_season.team_name
+  end
+
+  def fewest_hits(season_id)
+    min_hit_season = all_season_objects(season_id).min_by do |season_object|
+      season_object.total_hits
+    end
+    min_hit_season.team_name
+  end
+
+  def power_play_goal_percentage(season_id)
+    all_power_play_goals = all_season_objects(season_id).sum do |season_object|
+      season_object.total_power_play_goals
+    end
+    all_goals_wo_shootout = all_season_objects(season_id).sum do |season_object|
+      season_object.total_goals_wo_shootout
+    end
+    (all_power_play_goals.to_f / all_goals_wo_shootout).round(2)
   end
 
 end

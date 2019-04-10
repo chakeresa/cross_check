@@ -295,6 +295,8 @@ class StatTrackerTest < Minitest::Test
     assert_equal expected, @med_stats.seasonal_summary("5")
   end
 
+  # SeasonStats module tests
+
   def test_biggest_bust_returns_team_name_with_biggest_decrease_between_reg_and_post_season_win_pct
     assert_equal "Penguins", @med_stats.biggest_bust("20152016")
   end
@@ -321,4 +323,24 @@ class StatTrackerTest < Minitest::Test
     assert_equal "Barry Trotz", @med_stats.worst_coach("20152016")
   end
 
+  def test_most_accurate_team_returns_team_name_with_best_ratio_of_shots_to_goals_for_season
+    assert_equal "Capitals", @med_stats.most_accurate_team("20152016")
+  end
+
+  def test_least_accurate_team_returns_team_name_with_best_ratio_of_shots_to_goals_for_season
+    assert_equal "Penguins", @med_stats.least_accurate_team("20152016")
+  end
+
+  def test_most_hits_returns_name_of_team_w_most_hits_in_the_season
+    assert_equal "Sharks", @med_stats.most_hits("20152016")
+  end
+
+  def test_fewest_hits_returns_name_of_team_w_fewest_hits_in_the_season
+    assert_equal "Capitals", @med_stats.fewest_hits("20152016")
+  end
+
+  def test_power_play_goal_percentage_returns_percent_of_non_shootout_goals_that_were_power_play_goals_in_the_season
+    assert_equal 0.16, @med_stats.power_play_goal_percentage("20152016")
+  end
+  
 end

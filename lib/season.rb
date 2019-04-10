@@ -3,7 +3,8 @@ require_relative 'team'
 class Season
   attr_reader :season_id,
               :team_name,
-              :all_games
+              :all_games,
+              :team_id
 
   def initialize(team_object, season_id)
     @team_id = team_object.team_id
@@ -153,4 +154,53 @@ class Season
     }
     hash = {regular_season: regular_season_hash, postseason: post_season_hash}
   end
+
+  def goals_per_shots_ratio
+    all_home_goals = 0
+    all_home_shots = 0
+    all_away_goals = 0
+    all_away_shots = 0
+    @all_games[:home].each do |home_game|
+      all_home_goals += home_game.goals_wo_shootout[:home]
+      all_home_shots += home_game.shots[:home]
+    end
+    @all_games[:away].each do |away_game|
+      all_away_goals += away_game.goals_wo_shootout[:away]
+      all_away_shots += away_game.shots[:away]
+    end
+    total_goals = all_home_goals + all_away_goals
+    total_shots = all_home_shots + all_away_shots
+    (total_goals.to_f / total_shots).round(3)
+  end
+
+  def total_hits
+    total_hits_count = @all_games[:home].sum do |home_game|
+      home_game.hits[:home]
+    end
+    total_hits_count += @all_games[:away].sum do |away_game|
+      away_game.hits[:away]
+    end
+    total_hits_count
+  end
+
+  def total_power_play_goals
+    total_pp_goals_count = @all_games[:home].sum do |home_game|
+      home_game.power_play_goals[:home]
+    end
+    total_pp_goals_count += @all_games[:away].sum do |away_game|
+      away_game.power_play_goals[:away]
+    end
+    total_pp_goals_count
+  end
+
+  def total_goals_wo_shootout
+    total_goals_wo_so_count = @all_games[:home].sum do |home_game|
+      home_game.goals_wo_shootout[:home]
+    end
+    total_goals_wo_so_count += @all_games[:away].sum do |away_game|
+      away_game.goals_wo_shootout[:away]
+    end
+    total_goals_wo_so_count
+  end
+
 end
