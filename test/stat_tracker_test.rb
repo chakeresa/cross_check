@@ -309,9 +309,17 @@ class StatTrackerTest < Minitest::Test
 
 # worst_coach	Name of the Coach with the worst win percentage for the season	String
 
-# most_accurate_team	Name of the Team with the best ratio of shots to goals for the season	String
+  def test_all_season_objects
+    assert_equal 4, @med_stats.all_season_objects("20152016").count
+  end
 
-# least_accurate_team	Name of the Team with the worst ratio of shots to goals for the season	String
+  def test_most_accurate_team_returns_team_name_with_best_ratio_of_shots_to_goals_for_season
+    assert_equal "Capitals", @med_stats.most_accurate_team("20152016")
+  end
+
+  def test_least_accurate_team_returns_team_name_with_best_ratio_of_shots_to_goals_for_season
+    assert_equal "Penguins", @med_stats.least_accurate_team("20152016")
+  end
 
   def test_most_hits_returns_name_of_team_w_most_hits_in_the_season
     assert_equal "Sharks", @med_stats.most_hits("20152016")
@@ -324,4 +332,5 @@ class StatTrackerTest < Minitest::Test
   def test_power_play_goal_percentage_returns_percent_of_non_shootout_goals_that_were_power_play_goals_in_the_season
     assert_equal 0.16, @med_stats.power_play_goal_percentage("20152016")
   end
+  
 end
