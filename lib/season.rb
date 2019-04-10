@@ -1,10 +1,12 @@
 require_relative 'team'
 
 class Season
-  attr_reader :season_id
+  attr_reader :season_id,
+              :team_name
 
   def initialize(team_object, season_id)
     @team_id = team_object.team_id
+    @team_name = team_object.team_name
     @season_id = season_id.to_s
     @regular_seas_games = generate_regular_seas_games(team_object)
     @post_seas_games = generate_post_seas_games(team_object)
@@ -150,4 +152,15 @@ class Season
     }
     hash = {regular_season: regular_season_hash, postseason: post_season_hash}
   end
+
+  def total_goals
+    total_home_goals = @all_games[:home].sum do |home_game|
+      home_game.goals[:home]
+    end
+    total_away_goals = @all_games[:away].sum do |away_game|
+      away_game.goals[:away]
+    end
+    total_home_goals + total_away_goals
+  end
+
 end

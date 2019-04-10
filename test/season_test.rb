@@ -84,4 +84,8 @@ class SeasonTest < Minitest::Test
 
     assert_equal expected, @season.summary
   end
+
+  def test_total_goals
+    assert_equal 22, @season.total_goals
+  end
 end

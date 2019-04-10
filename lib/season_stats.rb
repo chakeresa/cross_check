@@ -24,4 +24,13 @@ module SeasonStats
     end.team_name
   end
 
+  def all_season_objects(season_id)
+    team_objects = @teams.values.find_all do |team_object|
+      team_object.seasons_hash.keys.include?(season_id)
+    end
+    team_objects.map do |team_object|
+      team_object.seasons_hash[season_id]
+    end
+  end
+
 end
