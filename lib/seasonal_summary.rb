@@ -1,10 +1,10 @@
 module SeasonalSummary
   def reg_seas_win_percentage
     home_wins = @regular_seas_games[:home].count do |home_game|
-      home_game.home_win
+      home_game.home_win?
     end
     away_wins = @regular_seas_games[:away].count do |away_game|
-      !away_game.home_win
+      !away_game.home_win?
     end
     game_count_for_calc = [total_regular_game_count, 1].max
     ((home_wins.to_f + away_wins) / game_count_for_calc).round(2)
@@ -12,10 +12,10 @@ module SeasonalSummary
 
   def post_seas_win_percentage
     home_wins = @post_seas_games[:home].count do |home_game|
-      home_game.home_win
+      home_game.home_win?
     end
     away_wins = @post_seas_games[:away].count do |away_game|
-      !away_game.home_win
+      !away_game.home_win?
     end
     game_count_for_calc = [total_post_game_count, 1].max
     ((home_wins.to_f + away_wins) / game_count_for_calc).round(2)

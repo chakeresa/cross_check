@@ -52,9 +52,9 @@ module SeasonStats
       win_count = 0; loss_count = 0
       season_objects.each do |season_object|
         all_game_objects(season_object).each do |game|
-          if (coach == game.coaches[:home] && game.home_win) || (coach == game.coaches[:away] && !game.home_win)
+          if (coach == game.coaches[:home] && game.home_win?) || (coach == game.coaches[:away] && !game.home_win?)
             win_count += 0.5
-          elsif (coach == game.coaches[:home] && !game.home_win) || (coach == game.coaches[:away] && game.home_win)
+          elsif (coach == game.coaches[:home] && !game.home_win?) || (coach == game.coaches[:away] && game.home_win?)
             loss_count += 0.5
           end
         end

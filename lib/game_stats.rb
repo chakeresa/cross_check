@@ -22,7 +22,7 @@ module GameStats
 
   def percentage_home_wins
     home_game_wins = @games.count do |game_id, game|
-      game.home_win
+      game.home_win?
     end
     (home_game_wins.to_f / @games.count).round(2)
   end

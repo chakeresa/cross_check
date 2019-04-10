@@ -14,13 +14,13 @@ module TeamStats
     team.games[:home].each do |home_game|
       if home_game.season == season
         home_matches += 1
-        home_wins += 1 if home_game.home_win
+        home_wins += 1 if home_game.home_win?
       end
     end
     team.games[:away].each do |away_game|
       if away_game.season == season
         away_matches += 1
-        away_wins += 1 if !away_game.home_win
+        away_wins += 1 if !away_game.home_win?
       end
     end
     ((home_wins.to_f + away_wins) / (home_matches + away_matches)).round(2)
@@ -47,10 +47,10 @@ module TeamStats
   def average_win_percentage(team_id)
     team_object = @teams[team_id.to_i]
     home_wins = team_object.games[:home].count do |home_game|
-      home_game.home_win
+      home_game.home_win?
     end
     away_wins = team_object.games[:away].count do |away_game|
-      !away_game.home_win
+      !away_game.home_win?
     end
     ((home_wins.to_f + away_wins) / team_object.total_game_count).round(2)
   end
@@ -89,13 +89,13 @@ module TeamStats
     team.games[:home].each do |home_game|
       if home_game.team_ids[:away] == opp_id
         home_matches += 1
-        home_wins += 1 if home_game.home_win
+        home_wins += 1 if home_game.home_win?
       end
     end
     team.games[:away].each do |away_game|
       if away_game.team_ids[:home] == opp_id
         away_matches += 1
-        away_wins += 1 if !away_game.home_win
+        away_wins += 1 if !away_game.home_win?
       end
     end
     ((home_wins.to_f + away_wins) / (home_matches + away_matches)).round(2)
