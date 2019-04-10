@@ -173,4 +173,14 @@ class Season
     end
     total_pp_goals_count
   end
+
+  def total_goals_wo_shootout
+    total_goals_wo_so_count = @all_games[:home].sum do |home_game|
+      home_game.goals_wo_shootout[:home]
+    end
+    total_goals_wo_so_count += @all_games[:away].sum do |away_game|
+      away_game.goals_wo_shootout[:away]
+    end
+    total_goals_wo_so_count
+  end
 end
