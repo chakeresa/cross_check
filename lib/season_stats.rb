@@ -73,6 +73,7 @@ module SeasonStats
   def worst_coach(season_id)
     hash = coach_winning_percentages(season_id)
     hash.each {|coach, pct| return coach if pct == hash.values.min}
+  end
 
   def most_accurate_team(season_id)
     most_accurate = all_season_objects(season_id).max_by do |season_object|
@@ -87,7 +88,7 @@ module SeasonStats
     end
     least_accurate.team_name
   end
-  
+
   def most_hits(season_id)
     max_hit_season = all_season_objects(season_id).max_by do |season_object|
       season_object.total_hits
