@@ -40,4 +40,11 @@ module SeasonStats
     most_accurate.team_name
   end
 
+  def least_accurate_team(season_id)
+    least_accurate = all_season_objects(season_id).min_by do |season_object|
+      season_object.goals_per_shots_ratio
+    end
+    least_accurate.team_name
+  end
+  
 end

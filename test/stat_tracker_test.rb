@@ -315,6 +315,10 @@ def test_most_accurate_team_returns_team_name_with_best_ratio_of_shots_to_goals_
   assert_equal "Capitals", @med_stats.most_accurate_team("20152016")
 end
 
+def test_least_accurate_team_returns_team_name_with_best_ratio_of_shots_to_goals_for_season
+  assert_equal "Penguins", @med_stats.least_accurate_team("20152016")
+end
+
 # least_accurate_team	Name of the Team with the worst ratio of shots to goals for the season	String
 
 # most_hits	Name of the Team with the most hits in the season	String
