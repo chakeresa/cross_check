@@ -33,6 +33,48 @@ module SeasonStats
     end
   end
 
+  def all_game_objects(season_object)
+    season_object.all_games.values.flatten
+  end
+
+  def all_coach_names(season_id)
+    season_objects = all_season_objects(season_id)
+    all_coaches = season_objects.flat_map do |season_object|
+      all_game_objects(season_object).flat_map { |game| game.coaches.values }
+    end.uniq
+  end
+
+  def coach_winning_percentages(season_id)
+    season_objects = all_season_objects(season_id)
+    all_coaches = all_coach_names(season_id)
+    hash = Hash.new(0)
+    all_coaches.each do |coach|
+      win_count = 0; loss_count = 0
+      season_objects.each do |season_object|
+        all_game_objects(season_object).each do |game|
+          if (coach == game.coaches[:home] && game.home_win) || (coach == game.coaches[:away] && !game.home_win)
+            win_count += 0.5
+          elsif (coach == game.coaches[:home] && !game.home_win) || (coach == game.coaches[:away] && game.home_win)
+            loss_count += 0.5
+          end
+        end
+      end
+      win_pct = win_count / (win_count + loss_count)
+      hash[coach] = win_pct
+    end
+    hash
+  end
+
+  def winningest_coach(season_id)
+    hash = coach_winning_percentages(season_id)
+    hash.each {|coach, pct| return coach if pct == hash.values.max}
+  end
+
+  def worst_coach(season_id)
+    hash = coach_winning_percentages(season_id)
+    hash.each {|coach, pct| return coach if pct == hash.values.min}
+  end
+
   def most_accurate_team(season_id)
     most_accurate = all_season_objects(season_id).max_by do |season_object|
       season_object.goals_per_shots_ratio
@@ -46,7 +88,7 @@ module SeasonStats
     end
     least_accurate.team_name
   end
-  
+
   def most_hits(season_id)
     max_hit_season = all_season_objects(season_id).max_by do |season_object|
       season_object.total_hits
