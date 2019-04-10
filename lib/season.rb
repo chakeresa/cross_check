@@ -153,7 +153,7 @@ class Season
     hash = {regular_season: regular_season_hash, postseason: post_season_hash}
   end
 
-  def shots_to_goals_ratio
+  def goals_per_shots_ratio
    all_home_shots = @all_games[:home].sum do |home_game|
       home_game.shots[:home]
    end
