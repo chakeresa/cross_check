@@ -12,10 +12,8 @@ module TeamStats
   end
 
   def win_percentage_for_season(team, season)
-    home_matches = 0
-    away_matches = 0
-    home_wins = 0
-    away_wins = 0
+    home_matches = 0; away_matches = 0
+    home_wins = 0; away_wins = 0
     team.games[:home].each do |home_game|
       if home_game.season == season
         home_matches += 1

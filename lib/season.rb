@@ -59,22 +59,6 @@ class Season
     all_games_hash
   end
 
-  def reg_seas_total_goals
-    reg_home_goals_scored = @regular_seas_games[:home].sum {|home_game| home_game.goals[:home]}
-    reg_home_goals_against = @regular_seas_games[:home].sum {|home_game| home_game.goals[:away]}
-    reg_away_goals_scored = @regular_seas_games[:away].sum {|away_game| away_game.goals[:away]}
-    reg_away_goals_against = @regular_seas_games[:away].sum {|away_game| away_game.goals[:home]}
-    {scored: reg_home_goals_scored + reg_away_goals_scored, against: reg_home_goals_against + reg_away_goals_against}
-  end
-
-  def post_seas_total_goals
-    post_home_goals_scored = @post_seas_games[:home].sum {|home_game| home_game.goals[:home]}
-    post_home_goals_against = @post_seas_games[:home].sum {|home_game| home_game.goals[:away]}
-    post_away_goals_scored = @post_seas_games[:away].sum {|away_game| away_game.goals[:away]}
-    post_away_goals_against = @post_seas_games[:away].sum {|away_game| away_game.goals[:home]}
-    {scored: post_home_goals_scored + post_away_goals_scored, against: post_home_goals_against + post_away_goals_against}
-  end
-
   def total_regular_game_count
     @regular_seas_games[:home].count + @regular_seas_games[:away].count
   end
@@ -85,19 +69,6 @@ class Season
 
   def total_game_count
     total_regular_game_count + total_post_game_count
-  end
-
-  def reg_seas_avg_goals_per_game
-    avg_goals_scored = (reg_seas_total_goals[:scored].to_f / total_regular_game_count).round(2)
-    avg_goals_against = (reg_seas_total_goals[:against].to_f / total_regular_game_count).round(2)
-    {scored: avg_goals_scored, against: avg_goals_against}
-  end
-
-  def post_seas_avg_goals_per_game
-    game_count_for_calc = [total_post_game_count, 1].max
-    avg_goals_scored = (post_seas_total_goals[:scored].to_f / game_count_for_calc).round(2)
-    avg_goals_against = (post_seas_total_goals[:against].to_f / game_count_for_calc).round(2)
-    {scored: avg_goals_scored, against: avg_goals_against}
   end
 
   def goals_per_shots_ratio
