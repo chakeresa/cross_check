@@ -298,7 +298,6 @@ class StatTrackerTest < Minitest::Test
   # SeasonStats module tests
 
   def test_all_teams_in_post_season_returns_array_of_team_objects
-    # assert_equal [@stats.teams[3], @stats.teams[6], @stats.teams[5], @stats.teams[17], @stats.teams[16]], @stats.all_teams_in_post_season("20122013")
     assert_equal [@stats.teams[6], @stats.teams[3], @stats.teams[5], @stats.teams[17], @stats.teams[16]], @stats.all_teams_in_post_season("20122013")
   end
 
