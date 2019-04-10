@@ -153,24 +153,22 @@ class Season
     hash = {regular_season: regular_season_hash, postseason: post_season_hash}
   end
 
-  def total_goals
-    total_home_goals = @all_games[:home].sum do |home_game|
-      home_game.goals[:home]
-    end
-    total_away_goals = @all_games[:away].sum do |away_game|
-      away_game.goals[:away]
-    end
-    total_home_goals + total_away_goals
-  end
-
-  def total_shots
-    total_home_game_shots = @all_games[:home].sum do |home_game|
-      home_game.shots[:home]
-    end
-    total_away_game_shots = @all_games[:away].sum do |away_game|
-      away_game.shots[:away]
-    end
-    total_home_game_shots + total_away_game_shots
-  end
+  def shots_to_goals_ratio
+   all_home_goals = 0
+   all_home_shots = 0
+   all_away_goals = 0
+   all_away_shots = 0
+   @all_games[:home].each do |home_game|
+     all_home_goals += home_game.goals[:home]
+     all_home_shots += home_game.shots[:home]
+   end
+   @all_games[:away].each do |away_game|
+     all_away_goals += away_game.goals[:away]
+     all_away_shots += away_game.shots[:away]
+   end
+   total_goals = all_home_goals + all_away_goals
+   total_shots = all_home_shots + all_away_shots
+   total_goals.to_f / total_shots
+ end
 
 end

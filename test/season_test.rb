@@ -85,11 +85,8 @@ class SeasonTest < Minitest::Test
     assert_equal expected, @season.summary
   end
 
-  def test_total_goals
-    assert_equal 22, @season.total_goals
+  def test_shots_to_goals_ratio
+    assert_equal 0.125, @season.shots_to_goals_ratio
   end
 
-  def test_total_shots
-    assert_equal 176, @season.total_shots
-  end
 end
