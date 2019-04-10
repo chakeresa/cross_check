@@ -33,26 +33,34 @@ module SeasonStats
     end
   end
 
+  def all_game_objects(season_object)
+    season_object.all_games.values.flatten
+  end
+
+  def all_coach_names(season_id)
+    season_objects = all_season_objects(season_id)
+    all_coaches = season_objects.flat_map do |season_object|
+      all_game_objects(season_object).flat_map { |game| game.coaches.values }
+    end.uniq
+  end
+
   def coach_winning_percentages(season_id)
-    season_object = all_season_objects(season_id)
-    coaches = season_object.flat_map { |team_seasons| team_seasons.all_games.values.flatten.flat_map { |game| game.coaches.values }}.uniq
+    season_objects = all_season_objects(season_id)
+    all_coaches = all_coach_names(season_id)
     hash = Hash.new(0)
-    coaches.each do |coach|
-      win_count = 0
-      loss_count = 0
-      season_object.each do |team_games|
-        team_games.all_games.values.flatten.each do |game|
+    all_coaches.each do |coach|
+      win_count = 0; loss_count = 0
+      season_objects.each do |season_object|
+        all_game_objects(season_object).each do |game|
           if (coach == game.coaches[:home] && game.home_win) || (coach == game.coaches[:away] && !game.home_win)
             win_count += 0.5
-            win_pct = win_count / (win_count + loss_count)
-            hash[coach] = win_pct
           elsif (coach == game.coaches[:home] && !game.home_win) || (coach == game.coaches[:away] && game.home_win)
             loss_count += 0.5
-            win_pct = win_count / (win_count + loss_count)
-            hash[coach] = win_pct
           end
         end
       end
+      win_pct = win_count / (win_count + loss_count)
+      hash[coach] = win_pct
     end
     hash
   end
