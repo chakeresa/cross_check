@@ -47,27 +47,19 @@ class Team
   end
 
   def home_win_count
-    @games[:home].count do |game|
-      game.home_win
-    end
+    @games[:home].count { |game| game.home_win? }
   end
 
   def home_loss_count
-    @games[:home].count do |game|
-      !game.home_win
-    end
+    @games[:home].count { |game| !game.home_win? }
   end
 
   def away_win_count
-    @games[:away].count do |game|
-      !game.home_win
-    end
+    @games[:away].count { |game| !game.home_win? }
   end
 
   def away_loss_count
-    @games[:away].count do |game|
-      game.home_win
-    end
+    @games[:away].count { |game| game.home_win? }
   end
 
   def total_game_count
@@ -93,5 +85,4 @@ class Team
     end
     [home_game_with_min_goals.goals[:home], away_game_with_min_goals.goals[:away]].min
   end
-
 end

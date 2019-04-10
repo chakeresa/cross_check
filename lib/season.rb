@@ -1,6 +1,9 @@
 require_relative 'team'
+require_relative 'seasonal_summary'
 
 class Season
+  include SeasonalSummary
+
   attr_reader :season_id,
               :team_name,
               :all_games,
@@ -16,8 +19,7 @@ class Season
   end
 
   def generate_regular_seas_games(team_object)
-    home_games = []
-    away_games = []
+    home_games = []; away_games = []
     team_object.games[:home].each do |home_game|
       if home_game.type == "R" && home_game.season == @season_id
         home_games << home_game
@@ -32,8 +34,7 @@ class Season
   end
 
   def generate_post_seas_games(team_object)
-    home_games = []
-    away_games = []
+    home_games = []; away_games = []
     team_object.games[:home].each do |home_game|
       if home_game.type == "P" && home_game.season == @season_id
         home_games << home_game
@@ -58,119 +59,24 @@ class Season
     all_games_hash
   end
 
-  def reg_seas_win_percentage
-    home_wins = @regular_seas_games[:home].count do |home_game|
-      home_game.home_win
-    end
-    away_wins = @regular_seas_games[:away].count do |away_game|
-      !away_game.home_win
-    end
-    game_count_for_calc = [total_regular_game_count, 1].max
-    ((home_wins.to_f + away_wins) / game_count_for_calc).round(2)
-  end
-
-  def post_seas_win_percentage
-    home_wins = @post_seas_games[:home].count do |home_game|
-      home_game.home_win
-    end
-    away_wins = @post_seas_games[:away].count do |away_game|
-      !away_game.home_win
-    end
-    game_count_for_calc = [total_post_game_count, 1].max
-    ((home_wins.to_f + away_wins) / game_count_for_calc).round(2)
-  end
-
-  def reg_seas_total_goals
-    total_goals_scored = 0
-    total_goals_against = 0
-    @regular_seas_games[:home].each do |home_game|
-      total_goals_scored += home_game.goals[:home]
-      total_goals_against += home_game.goals[:away]
-    end
-    @regular_seas_games[:away].each do |away_game|
-      total_goals_scored += away_game.goals[:away]
-      total_goals_against += away_game.goals[:home]
-    end
-    hash = {scored: total_goals_scored, against: total_goals_against}
-  end
-
-  def post_seas_total_goals
-    total_goals_scored = 0
-    total_goals_against = 0
-    @post_seas_games[:home].each do |home_game|
-      total_goals_scored += home_game.goals[:home]
-      total_goals_against += home_game.goals[:away]
-    end
-    @post_seas_games[:away].each do |away_game|
-      total_goals_scored += away_game.goals[:away]
-      total_goals_against += away_game.goals[:home]
-    end
-    hash = {scored: total_goals_scored, against: total_goals_against}
-  end
-
   def total_regular_game_count
-    home_game_count = @regular_seas_games[:home].count
-    away_game_count = @regular_seas_games[:away].count
-    home_game_count + away_game_count
+    @regular_seas_games[:home].count + @regular_seas_games[:away].count
   end
 
   def total_post_game_count
-    home_game_count = @post_seas_games[:home].count
-    away_game_count = @post_seas_games[:away].count
-    home_game_count + away_game_count
+    @post_seas_games[:home].count + @post_seas_games[:away].count
   end
 
   def total_game_count
     total_regular_game_count + total_post_game_count
   end
 
-  def reg_seas_avg_goals_per_game
-    avg_goals_scored = (reg_seas_total_goals[:scored].to_f / total_regular_game_count).round(2)
-    avg_goals_against = (reg_seas_total_goals[:against].to_f / total_regular_game_count).round(2)
-    hash = {scored: avg_goals_scored, against: avg_goals_against}
-  end
-
-  def post_seas_avg_goals_per_game
-    game_count_for_calc = [total_post_game_count, 1].max
-    avg_goals_scored = (post_seas_total_goals[:scored].to_f / game_count_for_calc).round(2)
-    avg_goals_against = (post_seas_total_goals[:against].to_f / game_count_for_calc).round(2)
-    hash = {scored: avg_goals_scored, against: avg_goals_against}
-  end
-
-  def summary
-    regular_season_hash = {
-      win_percentage: reg_seas_win_percentage,
-      total_goals_scored: reg_seas_total_goals[:scored],
-      total_goals_against: reg_seas_total_goals[:against],
-      average_goals_scored: reg_seas_avg_goals_per_game[:scored],
-      average_goals_against: reg_seas_avg_goals_per_game[:against]
-    }
-    post_season_hash = {
-      win_percentage: post_seas_win_percentage,
-      total_goals_scored: post_seas_total_goals[:scored],
-      total_goals_against: post_seas_total_goals[:against],
-      average_goals_scored: post_seas_avg_goals_per_game[:scored],
-      average_goals_against: post_seas_avg_goals_per_game[:against]
-    }
-    hash = {regular_season: regular_season_hash, postseason: post_season_hash}
-  end
-
   def goals_per_shots_ratio
-    all_home_goals = 0
-    all_home_shots = 0
-    all_away_goals = 0
-    all_away_shots = 0
-    @all_games[:home].each do |home_game|
-      all_home_goals += home_game.goals_wo_shootout[:home]
-      all_home_shots += home_game.shots[:home]
-    end
-    @all_games[:away].each do |away_game|
-      all_away_goals += away_game.goals_wo_shootout[:away]
-      all_away_shots += away_game.shots[:away]
-    end
-    total_goals = all_home_goals + all_away_goals
-    total_shots = all_home_shots + all_away_shots
-    (total_goals.to_f / total_shots).round(3)
+    home_goals = @all_games[:home].sum {|home_game| home_game.goals_wo_shootout[:home]}
+    away_goals = @all_games[:away].sum {|away_game| away_game.goals_wo_shootout[:away]}
+    home_shots = @all_games[:home].sum {|home_game| home_game.shots[:home]}
+    away_shots = @all_games[:away].sum {|away_game| away_game.shots[:away]}
+    ((home_goals + away_goals).to_f / (home_shots + away_shots)).round(3)
   end
 
   def total_hits
@@ -180,7 +86,6 @@ class Season
     total_hits_count += @all_games[:away].sum do |away_game|
       away_game.hits[:away]
     end
-    total_hits_count
   end
 
   def total_power_play_goals
@@ -190,7 +95,6 @@ class Season
     total_pp_goals_count += @all_games[:away].sum do |away_game|
       away_game.power_play_goals[:away]
     end
-    total_pp_goals_count
   end
 
   def total_goals_wo_shootout
@@ -200,7 +104,5 @@ class Season
     total_goals_wo_so_count += @all_games[:away].sum do |away_game|
       away_game.goals_wo_shootout[:away]
     end
-    total_goals_wo_so_count
   end
-
 end

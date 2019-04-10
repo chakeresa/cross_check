@@ -39,7 +39,7 @@ module SeasonStats
 
   def all_coach_names(season_id)
     season_objects = all_season_objects(season_id)
-    all_coaches = season_objects.flat_map do |season_object|
+    season_objects.flat_map do |season_object|
       all_game_objects(season_object).flat_map { |game| game.coaches.values }
     end.uniq
   end
@@ -52,9 +52,9 @@ module SeasonStats
       win_count = 0; loss_count = 0
       season_objects.each do |season_object|
         all_game_objects(season_object).each do |game|
-          if (coach == game.coaches[:home] && game.home_win) || (coach == game.coaches[:away] && !game.home_win)
+          if (coach == game.coaches[:home] && game.home_win?) || (coach == game.coaches[:away] && !game.home_win?)
             win_count += 0.5
-          elsif (coach == game.coaches[:home] && !game.home_win) || (coach == game.coaches[:away] && game.home_win)
+          elsif (coach == game.coaches[:home] && !game.home_win?) || (coach == game.coaches[:away] && game.home_win?)
             loss_count += 0.5
           end
         end
@@ -112,5 +112,4 @@ module SeasonStats
     end
     (all_power_play_goals.to_f / all_goals_wo_shootout).round(2)
   end
-
 end

@@ -23,7 +23,7 @@ class GameTest < Minitest::Test
     assert_equal ({home: 6, away: 3}), @game.team_ids
     assert_equal ({home: 3, away: 2}), @game.goals
     assert_equal ({home: 3, away: 2}), @game.goals_wo_shootout
-    assert_equal true, @game.home_win
+    assert_equal true, @game.home_win?
     assert_equal "OT", @game.settled_in
   end
 
@@ -36,5 +36,4 @@ class GameTest < Minitest::Test
   def test_total_goals_sums_home_and_away_goals
     assert_equal 5, @game.total_goals
   end
-
 end

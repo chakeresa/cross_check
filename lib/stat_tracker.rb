@@ -26,5 +26,4 @@ class StatTracker
     csv_loader = CsvLoader.new(locations)
     StatTracker.new(csv_loader.export)
   end
-
 end

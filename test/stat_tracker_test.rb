@@ -297,6 +297,10 @@ class StatTrackerTest < Minitest::Test
 
   # SeasonStats module tests
 
+  def test_all_teams_in_post_season_returns_array_of_team_objects
+    assert_equal [@stats.teams[6], @stats.teams[3], @stats.teams[5], @stats.teams[17], @stats.teams[16]], @stats.all_teams_in_post_season("20122013")
+  end
+
   def test_biggest_bust_returns_team_name_with_biggest_decrease_between_reg_and_post_season_win_pct
     assert_equal "Penguins", @med_stats.biggest_bust("20152016")
   end
@@ -311,7 +315,13 @@ class StatTrackerTest < Minitest::Test
   end
 
   def test_coach_winning_percentages_returns_a_hash_of_coaches_in_one_given_season_with_their_win_percentages
-    expected = {"Mike Sullivan"=>0.5, "Peter DeBoer"=>0.5555555555555556, "Barry Trotz"=>0.3333333333333333, "Peter Laviolette"=>0.42857142857142855, "Mike Johnston"=>1.0}
+    expected = {
+      "Mike Sullivan" => 0.5,
+      "Peter DeBoer" => 0.5555555555555556,
+      "Barry Trotz" => 0.3333333333333333,
+      "Peter Laviolette" => 0.42857142857142855,
+      "Mike Johnston" => 1.0
+    }
     assert_equal expected, @med_stats.coach_winning_percentages("20152016")
   end
 
@@ -340,7 +350,6 @@ class StatTrackerTest < Minitest::Test
   end
 
   def test_power_play_goal_percentage_returns_percent_of_non_shootout_goals_that_were_power_play_goals_in_the_season
-    assert_equal 0.16, @med_stats.power_play_goal_percentage("20152016")
+    assert_equal 0.16, @med_stats.power_play_goal_percentage("20152016") 
   end
-  
 end

@@ -41,4 +41,7 @@ class Game
     @goals.values.sum
   end
 
+  def home_win?
+    @home_win
+  end
 end

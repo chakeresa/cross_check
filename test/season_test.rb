@@ -96,5 +96,4 @@ class SeasonTest < Minitest::Test
   def test_total_power_play_goals_returns_total_number_of_pp_goals_in_season
     assert_equal 4, @season.total_power_play_goals
   end
-
 end

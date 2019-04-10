@@ -67,5 +67,4 @@ class TeamTest < Minitest::Test
   def test_away_loss_count
     assert_equal 2, @team.away_loss_count
   end
-
 end
