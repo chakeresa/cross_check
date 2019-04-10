@@ -163,4 +163,14 @@ class Season
     total_home_goals + total_away_goals
   end
 
+  def total_shots
+    total_home_game_shots = @all_games[:home].sum do |home_game|
+      home_game.shots[:home]
+    end
+    total_away_game_shots = @all_games[:away].sum do |away_game|
+      away_game.shots[:away]
+    end
+    total_home_game_shots + total_away_game_shots
+  end
+
 end
