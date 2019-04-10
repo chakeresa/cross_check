@@ -64,7 +64,7 @@ module TeamStats
     end
     ((home_wins.to_f + away_wins) / team_object.total_game_count).round(2)
   end
-  # TO DO: Use this helper method in other methods?
+
   def goals_for_team_in_game(team_object, game_object)
     if game_object.team_ids[:home] == team_object.team_id
       game_object.goals[:home]
@@ -91,30 +91,22 @@ module TeamStats
     all_opp_team_ids_when_away = team_object.games[:away].map do |home_game|
       home_game.team_ids[:home]
     end
-    all_opp_team_ids = (all_opp_team_ids_when_home + all_opp_team_ids_when_away).uniq
-    all_opp_team_ids
+    (all_opp_team_ids_when_home + all_opp_team_ids_when_away).uniq
   end
 
   def win_percentage_for_opponent(team, opp_id)
-    home_matches = 0
-    away_matches = 0
-    home_wins = 0
-    away_wins = 0
-
+    home_matches = 0; away_matches = 0
+    home_wins = 0; away_wins = 0
     team.games[:home].each do |home_game|
       if home_game.team_ids[:away] == opp_id
         home_matches += 1
-        if home_game.home_win
-          home_wins += 1
-        end
+        home_wins += 1 if home_game.home_win
       end
     end
     team.games[:away].each do |away_game|
       if away_game.team_ids[:home] == opp_id
         away_matches += 1
-        if !away_game.home_win
-          away_wins += 1
-        end
+        away_wins += 1 if !away_game.home_win
       end
     end
     ((home_wins.to_f + away_wins) / (home_matches + away_matches)).round(2)
