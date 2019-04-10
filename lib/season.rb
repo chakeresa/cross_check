@@ -1,10 +1,13 @@
 require_relative 'team'
 
 class Season
-  attr_reader :season_id
+  attr_reader :season_id,
+              :team_name,
+              :all_games
 
   def initialize(team_object, season_id)
     @team_id = team_object.team_id
+    @team_name = team_object.team_name
     @season_id = season_id.to_s
     @regular_seas_games = generate_regular_seas_games(team_object)
     @post_seas_games = generate_post_seas_games(team_object)

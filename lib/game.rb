@@ -14,7 +14,8 @@ class Game
               :power_play_goals,
               :face_off_win_percentage,
               :giveaways,
-              :takeaways
+              :takeaways,
+              :coaches
 
   def initialize(game_info, relevant_game_team_stats)
     @game_id = game_info[:game_id]

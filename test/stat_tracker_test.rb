@@ -303,18 +303,22 @@ class StatTrackerTest < Minitest::Test
     assert_equal "Predators", @med_stats.biggest_surprise("20152016")
   end
 
-# winningest_coach	Name of the Coach with the best win percentage for the season	String
+  def test_all_season_objects_returns_a_hash_of_season
+    assert_equal 4, @med_stats.all_season_objects("20152016").count
+    assert_instance_of Season, @med_stats.all_season_objects("20152016")[0]
+  end
 
-# worst_coach	Name of the Coach with the worst win percentage for the season	String
+  def test_coach_winning_percentages_returns_a_hash_of_coaches_in_one_given_season_with_their_win_percentages
+    expected = {"Mike Sullivan"=>0.5, "Peter DeBoer"=>0.5555555555555556, "Barry Trotz"=>0.3333333333333333, "Peter Laviolette"=>0.42857142857142855, "Mike Johnston"=>1.0}
+    assert_equal expected, @med_stats.coach_winning_percentages("20152016")
+  end
 
-# most_accurate_team	Name of the Team with the best ratio of shots to goals for the season	String
+  def test_winningest_coach_returns_coach_with_highest_win_percentage_for_the_season
+    assert_equal "Mike Johnston", @med_stats.winningest_coach("20152016")
+  end
 
-# least_accurate_team	Name of the Team with the worst ratio of shots to goals for the season	String
-
-# most_hits	Name of the Team with the most hits in the season	String
-
-# fewest_hits	Name of the Team with the fewest hits in the season	String
-
-# power_play_goal_percentage	Percentage of goals that were power play goals for the season (rounded to the nearest 100th)	Float
+  def test_worst_coach_returns_coach_with_lowest_win_percentage_for_the_season
+    assert_equal "Barry Trotz", @med_stats.worst_coach("20152016")
+  end
 
 end
