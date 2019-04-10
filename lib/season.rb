@@ -154,15 +154,21 @@ class Season
   end
 
   def goals_per_shots_ratio
-   all_home_shots = @all_games[:home].sum do |home_game|
-      home_game.shots[:home]
-   end
-   all_away_shots = @all_games[:away].sum do |away_game|
-      away_game.shots[:away]
-   end
-   total_goals = post_seas_total_goals[:scored] + reg_seas_total_goals[:scored]
-   total_shots = all_home_shots + all_away_shots
-   total_goals.to_f / total_shots
- end
+    all_home_goals = 0
+    all_home_shots = 0
+    all_away_goals = 0
+    all_away_shots = 0
+    @all_games[:home].each do |home_game|
+      all_home_goals += home_game.goals[:home]
+      all_home_shots += home_game.shots[:home]
+    end
+    @all_games[:away].each do |away_game|
+      all_away_goals += away_game.goals[:away]
+      all_away_shots += away_game.shots[:away]
+    end
+    total_goals = all_home_goals + all_away_goals
+    total_shots = all_home_shots + all_away_shots
+    (total_goals.to_f / total_shots).round(3)
+  end
 
 end

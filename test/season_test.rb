@@ -86,7 +86,7 @@ class SeasonTest < Minitest::Test
   end
 
   def test_goals_per_shots_ratio
-    assert_equal 0.125, @season.goals_per_shots_ratio
+    assert_equal 0.119, @season.goals_per_shots_ratio
   end
 
 end
