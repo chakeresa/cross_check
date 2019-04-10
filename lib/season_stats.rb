@@ -47,4 +47,28 @@ module SeasonStats
     least_accurate.team_name
   end
   
+  def most_hits(season_id)
+    max_hit_season = all_season_objects(season_id).max_by do |season_object|
+      season_object.total_hits
+    end
+    max_hit_season.team_name
+  end
+
+  def fewest_hits(season_id)
+    min_hit_season = all_season_objects(season_id).min_by do |season_object|
+      season_object.total_hits
+    end
+    min_hit_season.team_name
+  end
+
+  def power_play_goal_percentage(season_id)
+    all_power_play_goals = all_season_objects(season_id).sum do |season_object|
+      season_object.total_power_play_goals
+    end
+    all_goals_wo_shootout = all_season_objects(season_id).sum do |season_object|
+      season_object.total_goals_wo_shootout
+    end
+    (all_power_play_goals.to_f / all_goals_wo_shootout).round(2)
+  end
+
 end

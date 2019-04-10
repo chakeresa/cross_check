@@ -41,7 +41,7 @@ class Team
 
   def all_season_ids
     all_games_for_team = @games[:home] + @games[:away]
-    all_seas_ids = all_games_for_team.map do |game|
+    all_games_for_team.map do |game|
       game.season
     end.uniq
   end

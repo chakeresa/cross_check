@@ -89,4 +89,12 @@ class SeasonTest < Minitest::Test
     assert_equal 0.119, @season.goals_per_shots_ratio
   end
 
+  def test_total_hits_returns_total_number_of_hits_in_season
+    assert_equal 175, @season.total_hits
+  end
+
+  def test_total_power_play_goals_returns_total_number_of_pp_goals_in_season
+    assert_equal 4, @season.total_power_play_goals
+  end
+
 end
