@@ -97,15 +97,11 @@ class Season
   end
 
   def total_regular_game_count
-    home_game_count = @regular_seas_games[:home].count
-    away_game_count = @regular_seas_games[:away].count
-    home_game_count + away_game_count
+    @regular_seas_games[:home].count + @regular_seas_games[:away].count
   end
 
   def total_post_game_count
-    home_game_count = @post_seas_games[:home].count
-    away_game_count = @post_seas_games[:away].count
-    home_game_count + away_game_count
+    @post_seas_games[:home].count + @post_seas_games[:away].count
   end
 
   def total_game_count
