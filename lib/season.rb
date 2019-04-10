@@ -159,11 +159,11 @@ class Season
     all_away_goals = 0
     all_away_shots = 0
     @all_games[:home].each do |home_game|
-      all_home_goals += home_game.goals[:home]
+      all_home_goals += home_game.goals_wo_shootout[:home]
       all_home_shots += home_game.shots[:home]
     end
     @all_games[:away].each do |away_game|
-      all_away_goals += away_game.goals[:away]
+      all_away_goals += away_game.goals_wo_shootout[:away]
       all_away_shots += away_game.shots[:away]
     end
     total_goals = all_home_goals + all_away_goals
