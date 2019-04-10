@@ -142,5 +142,4 @@ module LeagueStats
       team.team_name
     end
   end
-  
 end

@@ -40,5 +40,4 @@ class Game
   def total_goals
     @goals.values.sum
   end
-
 end

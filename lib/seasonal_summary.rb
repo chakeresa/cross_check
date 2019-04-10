@@ -67,5 +67,4 @@ module SeasonalSummary
     }
     {regular_season: regular_season_hash, postseason: post_season_hash}
   end
-
 end

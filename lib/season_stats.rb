@@ -112,5 +112,4 @@ module SeasonStats
     end
     (all_power_play_goals.to_f / all_goals_wo_shootout).round(2)
   end
-
 end

@@ -1,5 +1,4 @@
 module GameStats
-
   def highest_total_score
     highest_score_game = @games.values.max_by do |game|
       game.total_goals
@@ -63,5 +62,4 @@ module GameStats
     end
     hash
   end
-
 end

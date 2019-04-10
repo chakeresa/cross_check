@@ -36,5 +36,4 @@ class GameTest < Minitest::Test
   def test_total_goals_sums_home_and_away_goals
     assert_equal 5, @game.total_goals
   end
-
 end

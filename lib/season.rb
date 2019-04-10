@@ -105,5 +105,4 @@ class Season
       away_game.goals_wo_shootout[:away]
     end
   end
-
 end
